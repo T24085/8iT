@@ -432,3 +432,23 @@ h1 em, h2 em { color: var(--red); font-style: normal; }
   [data-reveal], [data-reveal].is-visible { opacity: 1 !important; transform: none !important; transition: none !important; }
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
 }
+
+/* Full-bleed roster portraits: keep the card copy readable over the artwork. */
+.roster-card {
+  background-image: linear-gradient(180deg, rgba(8, 9, 11, 0.08) 4%, rgba(8, 9, 11, 0.18) 42%, rgba(8, 9, 11, 0.96) 100%), var(--player-bg, none);
+  background-position: center 18%;
+  background-size: cover;
+  min-height: 270px;
+  overflow: hidden;
+  padding: 0;
+}
+.roster-card__top { padding: 18px; position: relative; z-index: 1; }
+.roster-card__top b { display: none; }
+.roster-card__body { bottom: 50px; left: 18px; margin: 0; position: absolute; right: 18px; z-index: 1; }
+.roster-card__link, .roster-card__lock { z-index: 2; }
+
+@media (max-width: 430px) {
+  .roster-card { min-height: 240px; }
+  .roster-card__top { padding: 14px; }
+  .roster-card__body { bottom: 48px; left: 14px; right: 14px; }
+}
