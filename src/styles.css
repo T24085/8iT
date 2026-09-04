@@ -410,6 +410,22 @@ h1 em, h2 em { color: var(--red); font-style: normal; }
   .clip-modal__inner { padding: 10px; }
 }
 
+/* Keep the existing roster layout, but give each player portrait room to read. */
+.roster-card__top b {
+  border: 2px solid rgba(255, 255, 255, 0.42);
+  border-radius: 50%;
+  height: 86px;
+  transform: none;
+  width: 86px;
+}
+
+@media (max-width: 430px) {
+  .roster-card__top b {
+    height: 78px;
+    width: 78px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   :root { --hero-parallax: 0px; }
