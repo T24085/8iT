@@ -15,6 +15,7 @@ const navItems = [
 const channels = [
   { platform: 'Twitch', handle: 'pandoracast', type: 'twitch', role: 'PandaMonium // IGL', description: 'Team POV, match comms, and the Pandamonium broadcast desk.', url: 'https://www.twitch.tv/pandoracast', icon: 'fa-twitch', tone: 'red' },
   { platform: 'YouTube', handle: 'Pandoracasting', type: 'youtube', channelId: 'UCI36kIDATrRauLgtNa-Ht1w', role: 'Official event archive', description: 'Full match replays, event coverage, and the best moments from 8iT.', url: 'https://www.youtube.com/@Pandoracasting', icon: 'fa-youtube', tone: 'light' },
+  { platform: 'YouTube', handle: 'FragWatch', type: 'youtube', channelId: 'UCN98QEdNwJr9KbcDMjkn4rA', role: 'HanoSandy // Player POV', description: 'HanoSandy’s FragWatch channel for sharp angles, match coverage, and clutch replays.', url: 'https://www.youtube.com/@FragWatch', icon: 'fa-youtube', tone: 'light' },
   { platform: 'Twitch', handle: 'ghettobirdz', type: 'twitch', role: 'Player POV // Sniper', description: 'Follow the sniper lane live as every round starts to matter.', url: 'https://www.twitch.tv/ghettobirdz', icon: 'fa-twitch', tone: 'red' },
   { platform: 'Twitch', handle: 'titan101', type: 'twitch', role: 'Player POV // Rifler', description: 'A second angle on the action from the 8iT rifle line.', url: 'https://www.twitch.tv/titan101', icon: 'fa-twitch', tone: 'red' },
 ];

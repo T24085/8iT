@@ -18,7 +18,7 @@ export const defaultRoster = [
   ['BitchStewie', 'Rifler', 'LOCKED IN', null],
   ['ghettobird', 'Sniper', 'PLAYER POV', 'ghettobirdz'],
   ['ghosted', 'Entry Fragger', 'LOCKED IN', null],
-  ['Hanosandy', 'AWPer', 'LOCKED IN', null],
+  ['Hanosandy', 'AWPer', 'PLAYER POV', 'FragWatch'],
   ['hellaturlz', 'Support', 'LOCKED IN', null],
   ['Titan101', 'Rifler', 'PLAYER POV', 'titan101'],
 ];
