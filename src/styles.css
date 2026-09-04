@@ -41,7 +41,7 @@ main { overflow: hidden; background: var(--ink); }
 .menu-toggle.is-open span:first-child { transform: translateY(4px) rotate(45deg); }
 .menu-toggle.is-open span:last-child { transform: translateY(-4px) rotate(-45deg); width: 25px; }
 
-.hero { background-color: #111; background-image: url('/assets/8it-hero.png'); background-position: center calc(50% + var(--hero-parallax)); background-size: cover; min-height: min(900px, 70vw); overflow: hidden; position: relative; }
+.hero { background-color: #111; background-image: url('./8it-hero.png'); background-position: center calc(50% + var(--hero-parallax)); background-size: cover; min-height: min(900px, 70vw); overflow: hidden; position: relative; }
 .hero__veil { background: linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.04) 68%, rgba(0, 0, 0, 0.26)), rgba(0, 0, 0, 0.16); inset: 0; position: absolute; }
 .hero__scanline { animation: scanline-drift 11s ease-in-out infinite alternate; border: 1px solid rgba(239, 11, 40, 0.5); border-bottom: 0; border-left: 0; height: 118px; position: absolute; right: 5vw; top: 26%; width: 190px; }
 .hero__scanline::after { background: var(--red); content: ''; height: 3px; left: -24px; position: absolute; top: 14px; width: 50px; }
@@ -232,8 +232,8 @@ h1 em, h2 em { color: var(--red); font-style: normal; }
 .wall-post, .wall-submit { background: var(--panel); border: 1px solid var(--line); min-height: 250px; overflow: hidden; padding: 18px; position: relative; }
 .wall-post { display: flex; flex-direction: column; justify-content: end; transition: border-color 220ms ease, transform 220ms ease; }
 .wall-post:hover { border-color: var(--red); transform: translateY(-5px) rotate(-1deg); }
-.wall-post__texture { background: linear-gradient(135deg, rgba(239, 11, 40, 0.8), rgba(8, 9, 11, 0.35)), url('/assets/8it-page-reference.png') center / cover; inset: 0; opacity: 0.68; position: absolute; transition: transform 600ms ease; }
-.wall-post--dark .wall-post__texture { background: linear-gradient(135deg, rgba(0, 0, 0, 0.25), rgba(8, 9, 11, 0.92)), url('/assets/8it-hero.png') center / cover; }
+.wall-post__texture { background: linear-gradient(135deg, rgba(239, 11, 40, 0.8), rgba(8, 9, 11, 0.35)), url('./8it-page-reference.png') center / cover; inset: 0; opacity: 0.68; position: absolute; transition: transform 600ms ease; }
+.wall-post--dark .wall-post__texture { background: linear-gradient(135deg, rgba(0, 0, 0, 0.25), rgba(8, 9, 11, 0.92)), url('./8it-hero.png') center / cover; }
 .wall-post--submitted .wall-post__texture { background: repeating-linear-gradient(135deg, #191d22 0 10px, #101317 10px 20px); }
 .wall-post:hover .wall-post__texture { transform: scale(1.08) rotate(2deg); }
 .wall-post > span, .wall-post strong, .wall-post small { position: relative; z-index: 1; }

@@ -45,19 +45,19 @@ const playerProfiles = {
 };
 
 const playerMedia = {
-  Titan101: { portrait: '/assets/players/titan101.jpg', banner: '/assets/players/titan101-banner.jpg' },
-  hellaturlz: { portrait: '/assets/players/hellaturlz.jpg', banner: '/assets/players/hellaturlz-banner.jpg' },
-  ghosted: { portrait: '/assets/players/ghosted.jpg', banner: '/assets/players/ghosted-banner.jpg' },
-  ghettobird: { portrait: '/assets/players/ghettobird.jpg', banner: '/assets/players/ghettobird-banner.jpg' },
-  BitchStewie: { portrait: '/assets/players/bitchstewie.jpg', banner: '/assets/players/bitchstewie-banner.jpg' },
-  Hanosandy: { portrait: '/assets/players/hanosandy.jpg', banner: '/assets/players/hanosandy-banner.jpg' },
-  PandaMonium: { portrait: '/assets/players/pandamonium.jpg', banner: '/assets/players/pandamonium-banner.jpg' },
+  Titan101: { portrait: './assets/players/titan101.jpg', banner: './assets/players/titan101-banner.jpg' },
+  hellaturlz: { portrait: './assets/players/hellaturlz.jpg', banner: './assets/players/hellaturlz-banner.jpg' },
+  ghosted: { portrait: './assets/players/ghosted.jpg', banner: './assets/players/ghosted-banner.jpg' },
+  ghettobird: { portrait: './assets/players/ghettobird.jpg', banner: './assets/players/ghettobird-banner.jpg' },
+  BitchStewie: { portrait: './assets/players/bitchstewie.jpg', banner: './assets/players/bitchstewie-banner.jpg' },
+  Hanosandy: { portrait: './assets/players/hanosandy.jpg', banner: './assets/players/hanosandy-banner.jpg' },
+  PandaMonium: { portrait: './assets/players/pandamonium.jpg', banner: './assets/players/pandamonium-banner.jpg' },
 };
 
 const wallPosts = [
-  { handle: '@lanfestcolorado', copy: 'THE ROOM IS LOADING.', art: 'wall-post--red', type: 'PHOTO', image: '/assets/players/pandamonium.jpg' },
-  { handle: '@8it.squad', copy: 'NO SAFE ROUNDS.', art: 'wall-post--hero', type: 'SQUAD', image: '/assets/players/8it-frame.jpg' },
-  { handle: '@ghettobirdz', copy: 'WHO OWNS THE ANGLE?', art: 'wall-post--dark', type: 'CLIP', image: '/assets/players/ghettobird-banner.jpg' },
+  { handle: '@lanfestcolorado', copy: 'THE ROOM IS LOADING.', art: 'wall-post--red', type: 'PHOTO', image: './assets/players/pandamonium.jpg' },
+  { handle: '@8it.squad', copy: 'NO SAFE ROUNDS.', art: 'wall-post--hero', type: 'SQUAD', image: './assets/players/8it-frame.jpg' },
+  { handle: '@ghettobirdz', copy: 'WHO OWNS THE ANGLE?', art: 'wall-post--dark', type: 'CLIP', image: './assets/players/ghettobird-banner.jpg' },
 ];
 
 function getTimeRemaining(target) {
