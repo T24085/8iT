@@ -9,7 +9,7 @@ const navItems = [
   ['INTEL', '#intel'],
   ['COMMUNITY', '#community'],
   ['TICKETS', '#tickets'],
-  ['SHOP', '/shop.html'],
+  ['SHOP', './shop.html'],
 ];
 
 const channels = [
@@ -260,7 +260,7 @@ export function App() {
         <section id="about" className="section section--about" aria-labelledby="about-title"><div className="about-statement" data-reveal><SectionLabel>THE BIGGER PICTURE</SectionLabel><h2 id="about-title">PLAY HARD.<br /><em>DO GOOD.</em></h2></div><div className="about-copy" data-reveal style={{ '--reveal-delay': '120ms' }}><p>LANFest Colorado has spent two decades building healthy communities through gaming. This 20th anniversary event brings the Front Range together for four days of play, competition, and charity.</p><a className="text-link" href={currentEvent.officialUrl} target="_blank" rel="noreferrer">LEARN ABOUT LANFEST <ArrowIcon /></a></div><div className="venue-card" data-reveal style={{ '--reveal-delay': '220ms' }}><p className="eyebrow">THE VENUE</p><h3>{currentEvent.venue}</h3><p>{currentEvent.address}</p><a href="https://maps.google.com/?q=Douglas+County+Fairgrounds+and+Event+Center+Castle+Rock+CO" target="_blank" rel="noreferrer">OPEN MAPS <ArrowIcon /></a></div></section>
       </main>
 
-      <footer className="site-footer"><BrandMark /><p><i className="fa-solid fa-person-rifle" aria-hidden="true" /> 8iT // EVERLAN COLORADO</p><div className="footer-links"><a href="/shop.html">8iT SHOP</a><a href="/admin.html">CONTROL ROOM</a><a href={currentEvent.officialUrl} target="_blank" rel="noreferrer">LANFEST COLORADO</a><a href={currentEvent.ticketsUrl} target="_blank" rel="noreferrer">TIXR PASSES</a><a href="#home">BACK TO TOP <ArrowIcon direction="up" /></a></div></footer>
+      <footer className="site-footer"><BrandMark /><p><i className="fa-solid fa-person-rifle" aria-hidden="true" /> 8iT // EVERLAN COLORADO</p><div className="footer-links"><a href="./shop.html">8iT SHOP</a><a href="./admin.html">CONTROL ROOM</a><a href={currentEvent.officialUrl} target="_blank" rel="noreferrer">LANFEST COLORADO</a><a href={currentEvent.ticketsUrl} target="_blank" rel="noreferrer">TIXR PASSES</a><a href="#home">BACK TO TOP <ArrowIcon direction="up" /></a></div></footer>
 
       {activeClip && <div className="clip-modal" role="dialog" aria-modal="true" aria-label={`${activeClip.title} video`} onClick={() => setActiveClip(null)}><div className="clip-modal__inner" onClick={(eventClick) => eventClick.stopPropagation()}><button className="clip-modal__close" type="button" onClick={() => setActiveClip(null)} aria-label="Close video"><i className="fa-solid fa-xmark" aria-hidden="true" /></button><div className="clip-modal__player"><iframe src={`https://www.youtube-nocookie.com/embed/${activeClip.videoId}?autoplay=1&rel=0`} title={activeClip.title} allow="autoplay; fullscreen" allowFullScreen /></div><p>{activeClip.detail}</p><h2>{activeClip.title}</h2></div></div>}
       {activePlayer && <PlayerSpotlight player={activePlayer} onClose={() => setActivePlayer(null)} />}
