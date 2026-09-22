@@ -23,7 +23,7 @@ export default defineConfig({
   },
   server: {
     host: "0.0.0.0",
-    allowedHosts: ["terminal.local"],
+    allowedHosts: ["terminal.local", "taylor.tail5d09b2.ts.net"],
     warmup: {
       clientFiles: ["./src/main.jsx"],
     },

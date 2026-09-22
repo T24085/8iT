@@ -45,19 +45,19 @@ const playerProfiles = {
 };
 
 const playerMedia = {
-  Titan101: { portrait: './assets/players/titan101.jpg', banner: './assets/players/titan101-banner.jpg' },
-  hellaturlz: { portrait: './assets/players/hellaturlz.jpg', banner: './assets/players/hellaturlz-banner.jpg' },
-  ghosted: { portrait: './assets/players/ghosted.jpg', banner: './assets/players/ghosted-banner.jpg' },
-  ghettobird: { portrait: './assets/players/ghettobird.jpg', banner: './assets/players/ghettobird-banner.jpg' },
-  BitchStewie: { portrait: './assets/players/bitchstewie.jpg', banner: './assets/players/bitchstewie-banner.jpg' },
-  Hanosandy: { portrait: './assets/players/hanosandy.jpg', banner: './assets/players/hanosandy-banner.jpg' },
-  PandaMonium: { portrait: './assets/players/pandamonium.jpg', banner: './assets/players/pandamonium-banner.jpg' },
+  Titan101: { portrait: './assets/players-hq/titan101.png', banner: './assets/players-hq/titan101-wordmark.png' },
+  hellaturlz: { portrait: './assets/players-hq/hello-turtlz.png', banner: './assets/players-hq/hello-turtlz-wordmark.png' },
+  ghosted: { portrait: './assets/players-hq/ghosted.png', banner: './assets/players-hq/ghosted-wordmark.png' },
+  ghettobird: { portrait: './assets/players-hq/ghettobird.png', banner: './assets/players-hq/ghettobird-wordmark.png' },
+  BitchStewie: { portrait: './assets/players-hq/bitch-stewie.png', banner: './assets/players-hq/bitch-stewie-wordmark.png' },
+  Hanosandy: { portrait: './assets/players-hq/hano-sandy.png', banner: './assets/players-hq/hano-sandy-wordmark.png' },
+  PandaMonium: { portrait: './assets/players-hq/panda-monium.png', banner: './assets/players-hq/panda-monium-wordmark.png' },
 };
 
 const wallPosts = [
-  { handle: '@lanfestcolorado', copy: 'THE ROOM IS LOADING.', art: 'wall-post--red', type: 'PHOTO', image: './assets/players/pandamonium.jpg' },
-  { handle: '@8it.squad', copy: 'NO SAFE ROUNDS.', art: 'wall-post--hero', type: 'SQUAD', image: './assets/players/8it-frame.jpg' },
-  { handle: '@ghettobirdz', copy: 'WHO OWNS THE ANGLE?', art: 'wall-post--dark', type: 'CLIP', image: './assets/players/ghettobird-banner.jpg' },
+  { handle: '@lanfestcolorado', copy: 'THE ROOM IS LOADING.', art: 'wall-post--red', type: 'PHOTO', image: './assets/players-hq/panda-monium.png' },
+  { handle: '@8it.squad', copy: 'NO SAFE ROUNDS.', art: 'wall-post--hero', type: 'SQUAD', image: './assets/banners/hero-a-site.png' },
+  { handle: '@ghettobirdz', copy: 'WHO OWNS THE ANGLE?', art: 'wall-post--dark', type: 'CLIP', image: './assets/players-hq/ghettobird-wordmark.png' },
 ];
 
 function getTimeRemaining(target) {
@@ -100,6 +100,21 @@ function CommunityWall({ onPulse }) {
 function BrandMark() { return <a className="brand-mark" href="#home" aria-label="8iT home">8iT</a>; }
 function ArrowIcon({ direction = 'up-right' }) { return <i className={`fa-solid fa-arrow-${direction}`} aria-hidden="true" />; }
 function SectionLabel({ children, light = false }) { return <p className={`eyebrow ${light ? 'eyebrow--light' : ''}`}><span className="slash" />{children}</p>; }
+
+function CampaignBanner({ image, label, title, caption, align = 'left', position = 'center' }) {
+  return (
+    <section className={`campaign-banner campaign-banner--${align}`} aria-label={`${label}: ${title}`}>
+      <img className="campaign-banner__media" src={image} alt="" style={{ objectPosition: position }} />
+      <span className="campaign-banner__shade" />
+      <div className="campaign-banner__copy" data-reveal>
+        <p>{label}</p>
+        <h2>{title}</h2>
+        <span>{caption}</span>
+      </div>
+      <div className="campaign-banner__index" aria-hidden="true">8iT // COLORADO</div>
+    </section>
+  );
+}
 
 function ChannelPlayer({ channel }) {
   const embedUrl = channel.type === 'twitch'
@@ -240,23 +255,31 @@ export function App() {
       </header>
 
       <main>
-        <section id="home" className="hero" aria-labelledby="hero-title"><div className="hero__veil" /><div className="hero__scanline" /><div className="hero__content" data-reveal="hero-copy"><SectionLabel light>EVERLAN // COLORADO</SectionLabel><h1 id="hero-title">NO SAFE<br /><em>ROUNDS.</em></h1><p className="hero__copy">8iT is taking the room at LANFest Colorado. Four days. One squad. Every angle live.</p><div className="hero__actions"><a className="button button--primary" href={currentEvent.ticketsUrl} target="_blank" rel="noreferrer">GET EVENT PASSES <ArrowIcon /></a><a className="button button--ghost" href="#broadcast">WATCH THE FEED <i className="fa-solid fa-play" aria-hidden="true" /></a></div></div><div className="hero__event-card" data-reveal="hero-card" style={{ '--reveal-delay': '180ms' }}><p className="hero__event-kicker">{currentEvent.series}</p><strong>{currentEvent.shortDates}</strong><span>{currentEvent.location}</span><div className="hero__countdown"><small>EVENT T-MINUS</small><Countdown target={currentEvent.startAt} compact /></div><a href="#tickets">ENTER THE ROOM <ArrowIcon /></a></div><div className="hero__side-note">01 <span /> 8iT / NEW DAWN</div></section>
+        <section id="home" className="hero" aria-labelledby="hero-title" style={{ backgroundImage: 'url("./assets/banners/hero-a-site.png")' }}><div className="hero__veil" /><div className="hero__scanline" /><div className="hero__content" data-reveal="hero-copy"><SectionLabel light>EVERLAN // COLORADO</SectionLabel><h1 id="hero-title">NO SAFE<br /><em>ROUNDS.</em></h1><p className="hero__copy">8iT is taking the room at LANFest Colorado. Four days. One squad. Every angle live.</p><div className="hero__actions"><a className="button button--primary" href={currentEvent.ticketsUrl} target="_blank" rel="noreferrer">GET EVENT PASSES <ArrowIcon /></a><a className="button button--ghost" href="#broadcast">WATCH THE FEED <i className="fa-solid fa-play" aria-hidden="true" /></a></div></div><div className="hero__event-card" data-reveal="hero-card" style={{ '--reveal-delay': '180ms' }}><p className="hero__event-kicker">{currentEvent.series}</p><strong>{currentEvent.shortDates}</strong><span>{currentEvent.location}</span><div className="hero__countdown"><small>EVENT T-MINUS</small><Countdown target={currentEvent.startAt} compact /></div><a href="#tickets">ENTER THE ROOM <ArrowIcon /></a></div><div className="hero__side-note">01 <span /> 8iT / NEW DAWN</div></section>
 
         <section className="event-strip" aria-label="Event facts" data-reveal="strip"><div><span className="event-strip__number">04</span><span>FULL DAYS<br /><b>OF GAMING</b></span></div><div><span className="event-strip__number">330</span><span>SEATS<br /><b>IN THE ROOM</b></span></div><div><span className="event-strip__number">20</span><span>YEARS<br /><b>LANFEST COLORADO</b></span></div><div><span className="event-strip__number">∞</span><span>ROUNDS<br /><b>TO REMEMBER</b></span></div></section>
 
         <section id="team" className="section section--team" aria-labelledby="team-title"><div className="section-intro section-intro--team" data-reveal><SectionLabel>THE LINEUP</SectionLabel><h2 id="team-title">THE ROOM<br /><em>IS THE WEAPON.</em></h2><p>Seven players. One call. No one gets to hide when the lights go on.</p><a className="text-link" href="#broadcast">FIND YOUR ANGLE <ArrowIcon /></a></div><div className="roster-grid">{liveRoster.map(([name, role, status, channel], index) => <article className="roster-card roster-card--interactive" key={name} data-reveal style={{ '--reveal-delay': `${index * 70}ms` }} role="button" tabIndex="0" aria-label={`Open ${name} player profile`} onClick={(clickEvent) => { if (!clickEvent.target.closest('a')) setActivePlayer({ name, role, channel }); }} onKeyDown={(keyEvent) => { if (keyEvent.key === 'Enter' || keyEvent.key === ' ') { keyEvent.preventDefault(); setActivePlayer({ name, role, channel }); } }}><img className="roster-card__portrait" src={playerMedia[name]?.portrait} alt="" aria-hidden="true" /><div className="roster-card__top"><span>{status}</span></div><div className="roster-card__body"><h3>{name}</h3><p>{role}</p></div>{channel ? <a className="roster-card__link" href={`#broadcast-${channel}`} onClick={() => emitPulse(120)}>WATCH POV <ArrowIcon /></a> : <span className="roster-card__lock">CLICK FOR FILE</span>}</article>)}</div></section>
 
+        <CampaignBanner image="./assets/banners/loadout-ak.png" label="LOADOUT // ROUND READY" title="BUILT TO HOLD THE SITE." caption="8iT CUSTOM KIT // COLORADO DEPLOYMENT" align="right" position="center 46%" />
+
         <section id="matches" className="section section--schedule" aria-labelledby="schedule-title"><div className="schedule-heading" data-reveal><SectionLabel>EVENT RHYTHM</SectionLabel><h2 id="schedule-title">FOUR DAYS.<br /><em>ONE STORY.</em></h2><p>Times are coming. The pressure is already here.</p></div><div className="schedule-list">{liveSchedule.map(([number, day, title, copy], index) => <article className="schedule-row" key={number} data-reveal style={{ '--reveal-delay': `${index * 90}ms` }}><span className="schedule-row__number">{number}</span><span className="schedule-row__day">{day}</span><h3>{title}</h3><p>{copy}</p><span className="schedule-row__mark"><ArrowIcon direction="down" /></span></article>)}</div></section>
 
         <LiveMatchCenter bracketData={liveBracket} killFeedData={liveKillFeed} liveMatchData={adminData.liveMatch} onPulse={() => emitPulse(92, 0.16)} />
+
+        <CampaignBanner image="./assets/banners/precision-awp.png" label="PRECISION // LONG SIGHTLINE" title="EVERY ANGLE IS WATCHED." caption="ONE ROUND AT A TIME // LIVE FROM COLORADO" position="center 42%" />
 
         <section id="hype" className="section section--hype" aria-labelledby="hype-title"><div className="hype-heading" data-reveal><div><SectionLabel light>WARMUP // NO BRAKES</SectionLabel><h2 id="hype-title">WATCH THE<br /><em>ROOM ERUPT.</em></h2></div><p>Borrow the nerve. Bring your own.</p></div><div className="clip-grid">{clips.map((clip, index) => <div className={`clip-reveal ${index === 0 ? 'clip-reveal--featured' : ''}`} key={clip.videoId} data-reveal style={{ '--reveal-delay': `${index * 90}ms` }}><ClipCard clip={clip} featured={index === 0} onPlay={setActiveClip} /></div>)}</div></section>
 
         <section id="broadcast" className="section section--broadcast" aria-labelledby="broadcast-title"><div className="broadcast-intro" data-reveal><SectionLabel>LIVE EVENT FEED</SectionLabel><h2 id="broadcast-title">WATCH 8iT<br /><em>LIVE.</em></h2><p>Choose your angle. Official coverage, player POVs, and the post-match story all live here.</p><div className="broadcast-intro__rule" /><p className="broadcast-intro__micro">STREAM LINKS // EVENT DAY NETWORK</p></div><div className="channel-grid">{channels.map((channel, index) => <div id={`broadcast-${channel.handle}`} key={channel.handle} data-reveal style={{ '--reveal-delay': `${index * 100}ms` }}><ChannelPlayer channel={channel} /></div>)}</div></section>
 
+        <CampaignBanner image="./assets/banners/utility-smoke.png" label="UTILITY // MAP CONTROL" title="CONTROL THE CHOKE POINT." caption="SMOKE DOWN // ENTRY TEAM MOVING" position="center 54%" />
+
         <section id="tickets" className="section section--tickets" aria-labelledby="tickets-title"><div className="tickets-heading" data-reveal><SectionLabel>GET IN THE ROOM</SectionLabel><h2 id="tickets-title">CHOOSE<br /><em>YOUR LOADOUT.</em></h2><p>LANFest Colorado is all ages, volunteer-powered, and built for the whole crew. Pick your way in, then bring the energy.</p><a className="button button--primary" href={currentEvent.ticketsUrl} target="_blank" rel="noreferrer">OPEN TIXR <ArrowIcon /></a></div><div className="ticket-grid">{ticketTiers.map(([name, price, detail, tag], index) => <article className={`ticket-card ${index === 0 ? 'ticket-card--featured' : ''}`} key={name} data-reveal style={{ '--reveal-delay': `${index * 90}ms` }}><span className="ticket-card__tag">{tag}</span><p className="ticket-card__index">0{index + 1} // PASS TYPE</p><h3>{name}</h3><strong>{price}</strong><p>{detail}</p><a href={currentEvent.ticketsUrl} target="_blank" rel="noreferrer">SELECT PASS <ArrowIcon /></a></article>)}</div></section>
 
         <CommunityWall onPulse={() => emitPulse(100, 0.15)} />
+
+        <CampaignBanner image="./assets/banners/close-quarters-knife.png" label="CLOSE QUARTERS // FINAL SIGNAL" title="COLORADO, WE'RE LOADING IN." caption="NO SAFE ROUNDS // 8iT" position="center 48%" />
 
         <section id="about" className="section section--about" aria-labelledby="about-title"><div className="about-statement" data-reveal><SectionLabel>THE BIGGER PICTURE</SectionLabel><h2 id="about-title">PLAY HARD.<br /><em>DO GOOD.</em></h2></div><div className="about-copy" data-reveal style={{ '--reveal-delay': '120ms' }}><p>LANFest Colorado has spent two decades building healthy communities through gaming. This 20th anniversary event brings the Front Range together for four days of play, competition, and charity.</p><a className="text-link" href={currentEvent.officialUrl} target="_blank" rel="noreferrer">LEARN ABOUT LANFEST <ArrowIcon /></a></div><div className="venue-card" data-reveal style={{ '--reveal-delay': '220ms' }}><p className="eyebrow">THE VENUE</p><h3>{currentEvent.venue}</h3><p>{currentEvent.address}</p><a href="https://maps.google.com/?q=Douglas+County+Fairgrounds+and+Event+Center+Castle+Rock+CO" target="_blank" rel="noreferrer">OPEN MAPS <ArrowIcon /></a></div></section>
       </main>
