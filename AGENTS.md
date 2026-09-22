@@ -11,5 +11,10 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 ## Durable visual direction
 
 - Keep the public site full bleed and edge to edge.
+- Use the supplied official 8iT logo asset for visible brand marks; do not recreate the logo with styled text.
+- Keep the hype-reel clips as equal square tiles in a gapless, edge-to-edge grid.
+- Keep tournament operations based on a 16-team, five-round BO1 Swiss stage: three wins advances, three losses eliminates, with editable team names, match results, and derived standings in the admin control room.
+- Use `public/assets/matches-swiss-background.png` as the full-bleed background for the Event Rhythm schedule section, with a dark readability veil over the image.
+- Hype-reel videos should autoplay muted and loop continuously inside their square tiles.
 - Use the supplied wide 8iT Counter-Strike banners as cinematic chapter breaks and hero media.
 - Preserve the black, off-white, and signal-red competitive identity, condensed display type, and existing data-rich sections.

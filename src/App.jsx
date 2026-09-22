@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ADMIN_STORAGE_KEY, defaultBracket as bracket, defaultEvent as event, defaultKillFeed as killFeed, defaultLiveMatch, defaultRoster as roster, defaultSchedule as schedule, readAdminData } from './siteData';
+import { ADMIN_STORAGE_KEY, defaultBracket as bracket, defaultEvent as event, defaultKillFeed as killFeed, defaultLiveMatch, defaultRoster as roster, defaultSchedule as schedule, readAdminData, swissToPublicBracket } from './siteData';
 
 const navItems = [
   ['TEAM', '#team'],
@@ -87,7 +87,7 @@ function LiveMatchCenter({ bracketData = bracket, killFeedData = killFeed, liveM
   const totalVotes = Object.values(votes).reduce((sum, value) => sum + value, 0);
   const vote = (player) => { if (voted) return; setVotes((current) => ({ ...current, [player]: current[player] + 1 })); setVoted(true); onPulse?.(); };
   const currentFeed = killFeedData[feedIndex] || killFeed[0];
-  return <section id="intel" className="section section--intel" aria-labelledby="intel-title"><div className="intel-heading" data-reveal><p className="eyebrow"><span className="slash" />LIVE SYSTEM // EVENT-DAY UI</p><h2 id="intel-title">THE ROUND<br /><em>NEVER SLEEPS.</em></h2><p>Scoreline, bracket, broadcast signal, and crowd control in one room. This is the live layer to connect to your match feed later.</p><span className="intel-heading__status"><i /> DEMO SIGNAL // READY TO CONNECT</span></div><div className="intel-panel" data-reveal style={{ '--reveal-delay': '120ms' }}><div className="intel-panel__top"><span><i /> NOW PLAYING</span><strong>{currentFeed[0]} <em>{currentFeed[1]}</em></strong><small>{currentFeed[2]}</small></div><div className="score-card"><div><span>{match.teamA}</span><strong>{match.scoreA}</strong><small>ROUND WINNER</small></div><b>:</b><div><span>{match.teamB}</span><strong>{match.scoreB}</strong><small>{match.roundLabel}</small></div><div className="score-card__live"><i /> {match.status}</div></div><div className="round-meter"><span>ROUND PROGRESS</span><div><b style={{ width: `${match.progress}%` }} /></div><strong>{match.progress}%</strong></div><div className="kill-feed">{killFeedData.map(([actor, action, detail], index) => <div className={index === feedIndex ? 'is-current' : ''} key={`${actor}-${action}`}><span>{actor}</span><b>{action}</b><small>{detail}</small></div>)}</div></div><div className="bracket-panel" data-reveal style={{ '--reveal-delay': '200ms' }}><div className="bracket-panel__head"><p className="eyebrow"><span className="slash" />TOURNAMENT PATH</p><span>BO3 // COLORADO</span></div><div className="bracket-grid">{bracketData.map((round) => <div key={round.title}><h3>{round.title}</h3>{round.rows.map(([left, leftScore, right, rightScore, status]) => <div className="bracket-match" key={`${left}-${right}`}><span>{left} <b>{leftScore}</b></span><span>{right} <b>{rightScore}</b></span><small>{status}</small></div>)}</div>)}</div></div><div className="poll-panel" data-reveal style={{ '--reveal-delay': '280ms' }}><div><p className="eyebrow"><span className="slash" />CROWD CONTROL</p><h3>WHO GETS THE<br /><em>FINAL ANGLE?</em></h3><p>Vote for the POV you want to see next. One vote per session.</p></div><div className="poll-options">{Object.entries(votes).map(([player, count]) => <button type="button" className={voted ? 'is-voted' : ''} key={player} onClick={() => vote(player)}><span><b>{player}</b><small>{Math.round((count / totalVotes) * 100)}%</small></span><i><em style={{ width: `${(count / totalVotes) * 100}%` }} /></i></button>)}</div>{voted && <span className="poll-confirmation">VOTE LOCKED // THE ROOM HEARD YOU</span>}</div></section>;
+  return <section id="intel" className="section section--intel" aria-labelledby="intel-title"><div className="intel-heading" data-reveal><p className="eyebrow"><span className="slash" />LIVE SYSTEM // EVENT-DAY UI</p><h2 id="intel-title">THE ROUND<br /><em>NEVER SLEEPS.</em></h2><p>Scoreline, bracket, broadcast signal, and crowd control in one room. This is the live layer to connect to your match feed later.</p><span className="intel-heading__status"><i /> DEMO SIGNAL // READY TO CONNECT</span></div><div className="intel-panel" data-reveal style={{ '--reveal-delay': '120ms' }}><div className="intel-panel__top"><span><i /> NOW PLAYING</span><strong>{currentFeed[0]} <em>{currentFeed[1]}</em></strong><small>{currentFeed[2]}</small></div><div className="score-card"><div><span>{match.teamA}</span><strong>{match.scoreA}</strong><small>ROUND WINNER</small></div><b>:</b><div><span>{match.teamB}</span><strong>{match.scoreB}</strong><small>{match.roundLabel}</small></div><div className="score-card__live"><i /> {match.status}</div></div><div className="round-meter"><span>ROUND PROGRESS</span><div><b style={{ width: `${match.progress}%` }} /></div><strong>{match.progress}%</strong></div><div className="kill-feed">{killFeedData.map(([actor, action, detail], index) => <div className={index === feedIndex ? 'is-current' : ''} key={`${actor}-${action}`}><span>{actor}</span><b>{action}</b><small>{detail}</small></div>)}</div></div><div className="bracket-panel" data-reveal style={{ '--reveal-delay': '200ms' }}><div className="bracket-panel__head"><p className="eyebrow"><span className="slash" />TOURNAMENT PATH</p><span>SWISS // BO1</span></div><div className="bracket-grid">{bracketData.map((round) => <div key={round.title}><h3>{round.title}</h3>{round.rows.map(([left, leftScore, right, rightScore, status]) => <div className="bracket-match" key={`${left}-${right}`}><span>{left} <b>{leftScore}</b></span><span>{right} <b>{rightScore}</b></span><small>{status}</small></div>)}</div>)}</div></div><div className="poll-panel" data-reveal style={{ '--reveal-delay': '280ms' }}><div><p className="eyebrow"><span className="slash" />CROWD CONTROL</p><h3>WHO GETS THE<br /><em>FINAL ANGLE?</em></h3><p>Vote for the POV you want to see next. One vote per session.</p></div><div className="poll-options">{Object.entries(votes).map(([player, count]) => <button type="button" className={voted ? 'is-voted' : ''} key={player} onClick={() => vote(player)}><span><b>{player}</b><small>{Math.round((count / totalVotes) * 100)}%</small></span><i><em style={{ width: `${(count / totalVotes) * 100}%` }} /></i></button>)}</div>{voted && <span className="poll-confirmation">VOTE LOCKED // THE ROOM HEARD YOU</span>}</div></section>;
 }
 
 function CommunityWall({ onPulse }) {
@@ -97,7 +97,13 @@ function CommunityWall({ onPulse }) {
   return <section id="community" className="section section--community" aria-labelledby="community-title"><div className="community-heading" data-reveal><p className="eyebrow eyebrow--light"><span className="slash" />THE WALL // SEND SIGNAL</p><h2 id="community-title">SHOW THE<br /><em>ROOM.</em></h2><p>Drop your LAN photo, clutch clip, or squad ritual. This starter wall is ready for real submissions when you connect storage or moderation.</p></div><div className="community-wall">{posts.map((post, index) => <article className={`wall-post ${post.art}`} data-reveal style={{ '--reveal-delay': `${index * 80}ms` }} key={`${post.handle}-${index}`}><div className="wall-post__texture" style={post.image ? { backgroundImage: `linear-gradient(135deg, rgba(239, 11, 40, 0.64), rgba(8, 9, 11, 0.78)), url("${post.image}")` } : undefined} /><span>{post.type}</span><strong>{post.copy}</strong><small>{post.handle}</small>{post.url && <a className="wall-post__link" href={post.url} target="_blank" rel="noreferrer">OPEN SUBMISSION <ArrowIcon /></a>}</article>)}<form className="wall-submit" onSubmit={submit} data-reveal><p className="eyebrow"><span className="slash" />SUBMIT A CLIP</p><input aria-label="Your handle" placeholder="YOUR HANDLE" value={form.handle} onChange={(event) => setForm({ ...form, handle: event.target.value })} required /><input aria-label="Clip or photo URL" type="url" placeholder="CLIP / PHOTO URL" value={form.url} onChange={(event) => setForm({ ...form, url: event.target.value })} required /><input aria-label="Caption" placeholder="CAPTION // OPTIONAL" value={form.copy} onChange={(event) => setForm({ ...form, copy: event.target.value })} /><button type="submit">SEND TO THE WALL <ArrowIcon /></button><small>LOCAL DEMO // CONNECT MODERATION + STORAGE LATER</small></form></div></section>;
 }
 
-function BrandMark() { return <a className="brand-mark" href="#home" aria-label="8iT home">8iT</a>; }
+function BrandMark() {
+  return (
+    <a className="brand-mark" href="#home" aria-label="8iT home">
+      <img src="/assets/players-hq/8it-logo.png" alt="8iT" />
+    </a>
+  );
+}
 function ArrowIcon({ direction = 'up-right' }) { return <i className={`fa-solid fa-arrow-${direction}`} aria-hidden="true" />; }
 function SectionLabel({ children, light = false }) { return <p className={`eyebrow ${light ? 'eyebrow--light' : ''}`}><span className="slash" />{children}</p>; }
 
@@ -132,12 +138,15 @@ function ChannelPlayer({ channel }) {
   );
 }
 
-function ClipCard({ clip, featured = false, onPlay }) {
+function ClipCard({ clip, onPlay }) {
   return (
-    <article className={`clip-card ${featured ? 'clip-card--featured' : ''}`}>
-      <button className="clip-card__visual" type="button" onClick={() => onPlay(clip)} aria-label={`Play ${clip.title}`}>
-        <img src={`https://i.ytimg.com/vi/${clip.videoId}/maxresdefault.jpg`} alt="" loading="lazy" /><span className="clip-card__shade" /><span className="clip-card__play"><i className="fa-solid fa-play" aria-hidden="true" /></span><span className="clip-card__duration">{clip.duration}</span>
-      </button>
+    <article className="clip-card">
+      <div className="clip-card__visual">
+        <iframe src={`https://www.youtube-nocookie.com/embed/${clip.videoId}?autoplay=1&mute=1&loop=1&playlist=${clip.videoId}&controls=0&modestbranding=1&playsinline=1&rel=0`} title={`${clip.title} looping preview`} allow="autoplay; encrypted-media; picture-in-picture" tabIndex="-1" />
+        <span className="clip-card__shade" />
+        <button className="clip-card__hitarea" type="button" onClick={() => onPlay(clip)} aria-label={`Open ${clip.title}`} />
+        <span className="clip-card__duration">{clip.duration}</span>
+      </div>
       <div className="clip-card__copy"><p className="clip-card__detail">{clip.detail}</p><h3>{clip.title}</h3><p className="clip-card__source">{clip.channel} <span>//</span> YOUTUBE</p></div>
     </article>
   );
@@ -155,7 +164,7 @@ export function App() {
   const currentEvent = { ...event, ...(adminData.event || {}) };
   const liveRoster = adminData.roster || roster;
   const liveSchedule = adminData.schedule || schedule;
-  const liveBracket = adminData.bracket || bracket;
+  const liveBracket = adminData.swiss?.rounds ? swissToPublicBracket(adminData.swiss) : adminData.bracket || bracket;
   const liveKillFeed = adminData.killFeed || killFeed;
 
   const emitPulse = (frequency = 110, duration = 0.14, force = false) => {
@@ -269,7 +278,7 @@ export function App() {
 
         <CampaignBanner image="./assets/banners/precision-awp.png" label="PRECISION // LONG SIGHTLINE" title="EVERY ANGLE IS WATCHED." caption="ONE ROUND AT A TIME // LIVE FROM COLORADO" position="center 42%" />
 
-        <section id="hype" className="section section--hype" aria-labelledby="hype-title"><div className="hype-heading" data-reveal><div><SectionLabel light>WARMUP // NO BRAKES</SectionLabel><h2 id="hype-title">WATCH THE<br /><em>ROOM ERUPT.</em></h2></div><p>Borrow the nerve. Bring your own.</p></div><div className="clip-grid">{clips.map((clip, index) => <div className={`clip-reveal ${index === 0 ? 'clip-reveal--featured' : ''}`} key={clip.videoId} data-reveal style={{ '--reveal-delay': `${index * 90}ms` }}><ClipCard clip={clip} featured={index === 0} onPlay={setActiveClip} /></div>)}</div></section>
+        <section id="hype" className="section section--hype" aria-labelledby="hype-title"><div className="hype-heading" data-reveal><div><SectionLabel light>WARMUP // NO BRAKES</SectionLabel><h2 id="hype-title">WATCH THE<br /><em>ROOM ERUPT.</em></h2></div><p>Borrow the nerve. Bring your own.</p></div><div className="clip-grid">{clips.map((clip, index) => <div className="clip-reveal" key={clip.videoId} data-reveal style={{ '--reveal-delay': `${index * 90}ms` }}><ClipCard clip={clip} onPlay={setActiveClip} /></div>)}</div></section>
 
         <section id="broadcast" className="section section--broadcast" aria-labelledby="broadcast-title"><div className="broadcast-intro" data-reveal><SectionLabel>LIVE EVENT FEED</SectionLabel><h2 id="broadcast-title">WATCH 8iT<br /><em>LIVE.</em></h2><p>Choose your angle. Official coverage, player POVs, and the post-match story all live here.</p><div className="broadcast-intro__rule" /><p className="broadcast-intro__micro">STREAM LINKS // EVENT DAY NETWORK</p></div><div className="channel-grid">{channels.map((channel, index) => <div id={`broadcast-${channel.handle}`} key={channel.handle} data-reveal style={{ '--reveal-delay': `${index * 100}ms` }}><ChannelPlayer channel={channel} /></div>)}</div></section>
 
