@@ -15,6 +15,12 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Keep the hype-reel clips as equal square tiles in a gapless, edge-to-edge grid.
 - Keep tournament operations based on a 16-team, five-round BO1 Swiss stage: three wins advances, three losses eliminates, with editable team names, match results, and derived standings in the admin control room.
 - Use `public/assets/matches-swiss-background.png` as the full-bleed background for the Event Rhythm schedule section, with a dark readability veil over the image.
+- Use `public/assets/about-team-background.png` as the full-bleed background for the Play Hard. Do Good. section, preserving readable copy and venue information over the team image.
+- Keep the Play Hard. Do Good. image visibly bright through the overlay; use localized contrast instead of a heavy section-wide blackout.
+- Keep lineup copy direct and descriptive; avoid overwrought combat metaphors such as "the room is the weapon."
+- Keep roster portraits in equal 1:1 square tiles so the supplied square artwork remains fully visible at every breakpoint.
+- In player-profile modals, show the supplied portrait centered and uncropped, and embed the player's configured Twitch or YouTube stream directly instead of using an outbound watch button.
+- Treat each player wordmark as a full-bleed banner across the profile-content column, flush to the top and side edges rather than contained inside a padded logo slot.
 - Hype-reel videos should autoplay muted and loop continuously inside their square tiles.
 - Use the supplied wide 8iT Counter-Strike banners as cinematic chapter breaks and hero media.
 - Preserve the black, off-white, and signal-red competitive identity, condensed display type, and existing data-rich sections.

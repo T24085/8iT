@@ -1,51 +1,47 @@
-# 8iT / EverLAN Colorado Visual QA
+# Design QA — Player Profile Modal
 
-## Source visual truth
+- Source visual truth: the player-profile Browser Comment screenshots from 2026-09-22 (conversation-local; no filesystem path), 1274 × 905 px, reporting a 1115 × 792 CSS viewport.
+- Implementation screenshot: live in-app Browser capture of `http://localhost:4174/#team`, 1115 × 792 CSS px, browser-managed device scale.
+- Responsive evidence: live in-app Browser capture at 390 × 844 CSS px.
+- State: PandaMonium player-profile modal open with the configured Twitch stream loaded.
 
-- `C:/Users/chris/Desktop/8iT/ChatGPT Image Sep 3, 2026, 05_59_52 PM.png` — supplied 8iT hero artwork.
-- `C:/Users/chris/Desktop/8iT/ChatGPT Image Sep 3, 2026, 06_00_11 PM.png` — supplied 8iT team-page composition reference.
-- `C:/Users/chris/.codex/codex-remote-attachments/01a06987-d12b-7042-8769-9a57ba77927e/2B5837A5-E151-46FC-A13B-D4CCB784AC84/` — supplied 8iT player portraits, identity frame, and banner lockups, copied to `public/assets/players/`.
-- `https://lanfestcolorado.com/` — verified event context and venue source.
-- `https://www.tixr.com/groups/lanfest` — supplied ticket destination.
+## Full-view comparison evidence
 
-## Implementation evidence
+The source showed a tall `cover` background that cropped and offset the supplied portrait, obscured it with oversized initials, ended with an outbound watch button, and contained the player wordmark inside a padded logo slot. The revised modal displays the native 1254 × 1254 portrait as a centered, uncropped image, embeds the configured Twitch or YouTube player, and carries the wordmark across the full width of the content column.
 
-- Local implementation: `http://localhost:4174/`.
-- Broadcast route: `http://localhost:4174/#broadcast`.
-- Shop route: `http://localhost:4174/shop.html` and friendly route `http://localhost:4174/shop/`.
-- Browser-rendered screenshot: not re-captured in this continuation because the local browser automation surface failed to reconnect; the previous turn did capture the earlier implementation and current source/build evidence is recorded below.
-- Source hero dimensions: 2048 x 768 px.
-- CSS target viewports: desktop default browser viewport and 390 x 844 mobile breakpoint.
+## Focused region comparison evidence
 
-## Current build review
+- Desktop: the portrait renders at 380 × 380 px from the native 1254 × 1254 image, with the crown, character, and player wordmark visible. The stream iframe renders at 544 × 306 px in a 16:9 frame.
+- Desktop banner: the 621 × 165 px banner is flush with the content column's top, left, and right edges.
+- Mobile: the modal has no horizontal overflow; the 353 × 135 px banner is also flush on all three edges.
 
-- Composition: expanded from the reference into a full event microsite with a supplied-art hero, event fact strip, roster, match rhythm, hype reel, broadcast players, ticket loadouts, and venue/community close.
-- Navigation: fixed overlay header with scroll state, active hover treatment, external ticket CTA, and a tappable mobile drawer.
-- Typography: `Barlow Condensed` is used for display type; `Rajdhani` handles labels, body copy, metadata, and calls to action.
-- Color system: near-black surfaces, white display type, LANFest red actions/rules, muted steel-gray metadata, and green player indicators.
-- Broadcast: four real iframe containers are present — Twitch players for `pandoracast`, `ghettobirdz`, and `titan101`, plus the `@Pandoracasting` YouTube live-channel embed.
-- Hype reel: four public YouTube highlights are represented by their actual thumbnails and open in an accessible modal player on click.
-- Live layer: event countdown, configurable scoreline preview, rotating kill-feed signal, tournament bracket, and one-vote-per-session player POV poll are present under `#intel`.
-- Squad moments: roster cards open player spotlight files with role, signal, mode, and POV links.
-- Player art: supplied portraits and wide banner lockups are wired to all seven named roster cards and their spotlight files.
-- Community: a red/black photo wall and local clip submission flow are present under `#community`; submitted URLs remain clickable in the demo.
-- Sound: muted-by-default low-frequency interaction pulses can be enabled with the header sound control; the Konami sequence unlocks a secret 8iT overlay.
-- Shop: separate multi-page `shop.html` entry with editable product data, category filters, limited-stock labels, merch-drop countdown, quick view, size selection, cart drawer, quantity controls, and checkout connection placeholder.
-- Ticket conversion: General Admission `$60`, Premium `$140`, Board Games Only `$20`, and Spectator `FREE` route to the supplied Tixr group.
-- Venue/event copy: September 24–27, 2026, Castle Rock, Colorado, and Douglas County Fairgrounds & Event Center are surfaced from the current LANFest Colorado listing. The user-provided “EverLAN Colorado” name remains the campaign label.
-- Accessibility: semantic sections/headings, labelled navigation/menu, labelled video buttons, iframe titles, keyboard Escape close for the clip modal, and reduced-motion handling are implemented.
+## Findings
 
-## Verification history
+- No actionable P0, P1, or P2 differences remain for the requested modal changes.
+- Fonts and typography: the existing condensed display hierarchy and utility labels remain unchanged and readable.
+- Spacing and layout rhythm: the wordmark banner is full bleed within its column, the modal uses the available desktop height, keeps the close control visible, and becomes a single scrollable column on mobile.
+- Colors and visual tokens: existing black, white, green, and signal-red treatments are preserved.
+- Image quality and asset fidelity: the supplied square portrait is used directly with `object-fit: contain`; initials and cover cropping were removed.
+- Copy and content: player bio, stats, role, signal, mode, and stream identity remain intact. The external CTA was replaced by the embedded player as requested.
 
-1. Earlier browser pass verified the original hero, roster, broadcast layout, all four channel destinations, and mobile crop.
-2. Full-site implementation completed with modular data-driven sections, ticket CTAs, actual YouTube clip modal behavior, scroll-state navigation, and mobile menu behavior.
-3. `npm run build` passed and emitted `dist/client`, `dist/server/index.js`, and `dist/.openai/hosting.json`.
-4. `npm run test:sites` passed all 5 packaging tests, including the friendly shop route and emitted `shop.html`.
-5. Local HTTP smoke test returned `200` from `http://localhost:4174/` after the preview server was restarted.
-6. Visual re-capture is blocked by the CUA browser surface failing to reconnect after the continuation; no new browser screenshot is claimed as verified.
+## Interaction and runtime checks
 
-## Remaining QA gate
+- Opened the PandaMonium profile from the roster.
+- Confirmed the Twitch embed loads and presents the channel's current offline state inside the modal.
+- Confirmed the modal remains scrollable and free of horizontal overflow at 390 × 844.
+- Production build passed with `npm run build`.
+- Console review found only the existing duplicate-key warning in Swiss bracket placeholder matches; it is unrelated to the profile modal.
 
-- Reconnect the in-app browser and compare the current desktop and mobile renders against the supplied visual references before marking this report passed.
+## Comparison history
 
-final result: blocked
+- Initial P2: portrait used a tall cover crop, was visually offset, and was blocked by large initials.
+- Initial P2: stream access required leaving the profile through an outbound CTA.
+- Initial P2: player wordmark was contained inside a padded logo slot instead of filling the content-column banner area.
+- Fixes: replaced the background/initial treatment with the native portrait image using contained centering; replaced the CTA with a configured Twitch/YouTube iframe; removed the banner inset and changed the wordmark treatment to a full-bleed cover band.
+- Post-fix evidence: desktop and mobile captures show the complete portrait, embedded stream, and edge-to-edge banner without horizontal overflow.
+
+## Follow-up polish
+
+- The unrelated Swiss bracket duplicate-key warning can be cleaned up separately.
+
+final result: passed
