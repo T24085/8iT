@@ -123,7 +123,7 @@ function EventGallery() {
 function BrandMark() {
   return (
     <a className="brand-mark" href="#home" aria-label="8iT home">
-      <img src="/assets/players-hq/8it-logo.png" alt="8iT" />
+      <img src="./assets/players-hq/8it-logo.png" alt="8iT" />
     </a>
   );
 }

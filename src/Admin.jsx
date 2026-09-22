@@ -5,7 +5,7 @@ import './admin.css';
 const clone = (value) => JSON.parse(JSON.stringify(value));
 
 function ArrowIcon({ direction = 'up-right' }) { return <i className={`fa-solid fa-arrow-${direction}`} aria-hidden="true" />; }
-function AdminMark() { return <a className="admin-mark" href="./"><img src="/assets/players-hq/8it-logo.png" alt="8iT" /><span>// CONTROL ROOM</span></a>; }
+function AdminMark() { return <a className="admin-mark" href="./"><img src="./assets/players-hq/8it-logo.png" alt="8iT" /><span>// CONTROL ROOM</span></a>; }
 
 function Field({ label, value, onChange, type = 'text', placeholder = '' }) {
   return <label className="admin-field"><span>{label}</span><input type={type} value={value ?? ''} placeholder={placeholder} onChange={(event) => onChange(event.target.value)} /></label>;
