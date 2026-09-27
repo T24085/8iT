@@ -3,6 +3,7 @@
 .rematch-story__official-head { align-items: end; display: flex; gap: 24px; justify-content: space-between; }
 .rematch-story__official-head h2 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(46px, 5vw, 76px); font-style: italic; line-height: 0.85; margin: 0; }
 .rematch-story__official-head h2 em { color: var(--red); font-style: normal; }
+.rematch-story__standing { color: #aeb1b8; font-size: 10px; font-weight: 700; letter-spacing: 0.13em; line-height: 1.4; margin: 17px 0 0; }
 .rematch-story__official-head > a { color: #fff; flex: none; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; }
 .rematch-story__official-head > a i { color: var(--red); margin-left: 6px; }
 .rematch-story__official-head > a:hover, .rematch-story__official-head > a:focus-visible { color: var(--red); }

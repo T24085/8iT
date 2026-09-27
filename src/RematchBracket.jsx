@@ -9,7 +9,7 @@ export function RematchBracket({ rematch = defaultRematch }) {
 
   return <section id="rematch" className="section rematch-story" aria-labelledby="rematch-title">
     <div className="rematch-story__official" data-reveal>
-      <div className="rematch-story__official-head"><div><p className="eyebrow"><span className="slash" />OFFICIAL LANFEST // SWISS STAGE</p><h2>THE RECORD: <em>2–1.</em></h2></div><a href={bracketUrl} target="_blank" rel="noreferrer">VERIFY ON BATTLEFY <i className="fa-solid fa-arrow-up-right" aria-hidden="true" /></a></div>
+      <div className="rematch-story__official-head"><div><p className="eyebrow"><span className="slash" />OFFICIAL LANFEST // SWISS STAGE</p><h2>THE RECORD: <em>2–1.</em></h2><p className="rematch-story__standing">CS2 // RANKED #2 AMONG SIX TEAMS IN THE SHOWN BATTLEFY STANDINGS</p></div><a href={bracketUrl} target="_blank" rel="noreferrer">VERIFY ON BATTLEFY <i className="fa-solid fa-arrow-up-right" aria-hidden="true" /></a></div>
       <div className="rematch-story__official-grid">{official8itResults.map((match) => <article className="rematch-story__official-match" key={match.round}><span>ROUND {String(match.round).padStart(2, '0')} <b className={match.result === 'WIN' ? 'is-win' : 'is-loss'}>{match.result}</b></span><strong>8iT <i>vs</i> {match.opponent}</strong><small>{match.seriesScore} BEST-OF-ONE MATCH // NOT CS ROUNDS</small></article>)}</div>
     </div>
 
