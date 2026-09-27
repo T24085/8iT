@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { displayPlayerName, rosterPlayerName } from '../src/playerIdentity.js';
-import { getRecordedPlayerStats, recordedCompetitiveMaps } from '../src/recordedMatchStats.js';
+import { getRecordedPlayerStats, getRecordedPlayerTotals, recordedCompetitiveMaps } from '../src/recordedMatchStats.js';
 
 test('BitchStewie and Zixxy resolve to one roster identity', () => {
   assert.equal(rosterPlayerName('Zixxy'), 'BitchStewie');
@@ -26,4 +26,14 @@ test('the supplied competitive scoreboards remain distinct from the friendly rem
 test('only the two completed competitive maps appear in recorded player stats', () => {
   assert.equal(recordedCompetitiveMaps.length, 2);
   assert.deepEqual(getRecordedPlayerStats('BitchStewie').map(({ map }) => map), ['Dust II', 'Inferno']);
+});
+
+test('roster official totals sum only the supplied competitive maps', () => {
+  assert.deepEqual(getRecordedPlayerTotals('PandaMonium'), { kills: 40, deaths: 36, assists: 15 });
+  assert.deepEqual(getRecordedPlayerTotals('BitchStewie'), { kills: 29, deaths: 29, assists: 9 });
+  assert.deepEqual(getRecordedPlayerTotals('Zixxy'), getRecordedPlayerTotals('BitchStewie'));
+  assert.deepEqual(getRecordedPlayerTotals('ghettobird'), { kills: 48, deaths: 29, assists: 5 });
+  assert.deepEqual(getRecordedPlayerTotals('Hanosandy'), { kills: 37, deaths: 25, assists: 14 });
+  assert.deepEqual(getRecordedPlayerTotals('Titan101'), { kills: 29, deaths: 30, assists: 10 });
+  assert.equal(getRecordedPlayerTotals('ghosted'), null);
 });

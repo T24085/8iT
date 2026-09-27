@@ -55,3 +55,13 @@ export function getRecordedPlayerStats(name) {
       .find((player) => rosterPlayerName(player.name).toLowerCase() === rosterName),
   })).filter((entry) => entry.stats);
 }
+
+export function getRecordedPlayerTotals(name) {
+  const maps = getRecordedPlayerStats(name);
+  if (maps.length === 0) return null;
+  return maps.reduce((total, { stats }) => ({
+    kills: total.kills + stats.kills,
+    deaths: total.deaths + stats.deaths,
+    assists: total.assists + stats.assists,
+  }), { kills: 0, deaths: 0, assists: 0 });
+}

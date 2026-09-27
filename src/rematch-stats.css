@@ -19,9 +19,6 @@
 .rematch-stats tbody td { color: #e1e2e4; font-weight: 600; }
 .rematch-stats tbody tr:nth-child(odd) { background: rgba(255, 255, 255, 0.025); }
 .rematch-stats__note { color: #8d9198; font-size: 11px; letter-spacing: 0.05em; line-height: 1.45; margin: 24px 0 0; }
-.roster-card__rematch { background: rgba(8, 9, 11, 0.84); border-left: 2px solid var(--red); color: #fff; display: grid; gap: 3px; left: 18px; padding: 7px 9px; position: absolute; top: 49px; z-index: 2; }
-.roster-card__rematch small { color: #c0c2c6; font-size: 8px; font-weight: 700; letter-spacing: 0.1em; }
-.roster-card__rematch strong { font-family: 'Barlow Condensed', sans-serif; font-size: 19px; line-height: 1; }
 .player-modal__rematch { border: 1px solid var(--line); margin: 0 0 22px; padding: 16px; }
 .player-modal__rematch > span { color: var(--red); display: block; font-size: 9px; font-weight: 700; letter-spacing: 0.14em; margin-bottom: 12px; }
 .player-modal__rematch > div { border-top: 1px solid var(--line); display: grid; gap: 12px; grid-template-columns: 75px 1fr; padding: 10px 0; }
@@ -30,5 +27,5 @@
 .player-modal__rematch a { color: #fff; display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 0.12em; margin-top: 5px; text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 4px; }
 .sr-only { clip: rect(0, 0, 0, 0); clip-path: inset(50%); height: 1px; overflow: hidden; position: absolute; white-space: nowrap; width: 1px; }
 @media (max-width: 1000px) { .rematch-stats__maps { grid-template-columns: 1fr; } }
-@media (max-width: 780px) { .rematch-stats__intro { display: block; } .rematch-stats__intro > p { margin-top: 24px; } .roster-card__rematch { left: 14px; top: 45px; } .roster-card__rematch strong { font-size: 16px; } }
-@media (max-width: 430px) { .rematch-stats th, .rematch-stats td { padding: 12px 10px; } .rematch-stats th:first-child, .rematch-stats td:first-child { padding-left: 14px; } .rematch-stats th:last-child, .rematch-stats td:last-child { padding-right: 14px; } .roster-card__rematch { max-width: calc(100% - 28px); padding: 5px 6px; top: 44px; } .roster-card__rematch small { font-size: 7px; } }
+@media (max-width: 780px) { .rematch-stats__intro { display: block; } .rematch-stats__intro > p { margin-top: 24px; } }
+@media (max-width: 430px) { .rematch-stats th, .rematch-stats td { padding: 12px 10px; } .rematch-stats th:first-child, .rematch-stats td:first-child { padding-left: 14px; } .rematch-stats th:last-child, .rematch-stats td:last-child { padding-right: 14px; } }
