@@ -33,6 +33,6 @@ export function OfficialBracketPanel({ cs2Rounds, cs2Edited, cs2TeamName }) {
         </article>;
       })}</div>)}
     </div>
-    <div className="official-brackets__footer"><p>Scores show best-of-one or best-of-three match wins, not in-game rounds. {localCs2 ? 'Local CS2 edits may differ from Battlefy.' : 'Battlefield 4 and Overwatch second-place finishes are team-reported.'}</p><a href={bracket.sourceUrl} target="_blank" rel="noreferrer">VIEW {bracket.shortName} ON BATTLEFY <i className="fa-solid fa-arrow-up-right" aria-hidden="true" /></a></div>
+    <div className="official-brackets__footer"><p>Scores show best-of-one or best-of-three match wins, not in-game rounds. The three second-place podium finishes are team-reported.{localCs2 ? ' Local CS2 edits may differ from Battlefy.' : ''}</p><a href={bracket.sourceUrl} target="_blank" rel="noreferrer">VIEW {bracket.shortName} ON BATTLEFY <i className="fa-solid fa-arrow-up-right" aria-hidden="true" /></a></div>
   </div>;
 }
