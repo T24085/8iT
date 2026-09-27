@@ -25,6 +25,7 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Use the Community section as a curated event and tournament image gallery with category filters and an accessible lightbox; do not restore the public submission form unless explicitly requested.
 - Hype-reel videos should autoplay muted and loop continuously inside their square tiles.
 - Use the real FragWatch Intel LANFest stream recordings in the hype-reel grid, not unrelated YouTube highlight placeholders.
+- Show Battlefield 4 and Overwatch as separate team-reported second-place LANFest finishes, linked to their matching FragWatch replays; do not fold them into the CS2 Swiss standings or invent per-match scores.
 - Use the supplied wide 8iT Counter-Strike banners as cinematic chapter breaks and hero media.
 - Preserve the black, off-white, and signal-red competitive identity, condensed display type, and existing data-rich sections.
 - Keep verified LANFest results and the later iBuyPowerBottoms friendly rematch visually and semantically separate. The team-reported rematch win does not change the official 2–1 record; do not invent map scores or the still-unconfirmed second map name.

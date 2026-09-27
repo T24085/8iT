@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ADMIN_STORAGE_KEY, defaultBracket as bracket, defaultEvent as event, defaultKillFeed as killFeed, defaultLiveMatch, defaultRoster as roster, defaultSchedule as schedule, readAdminData, swissToPublicBracket } from './siteData';
 import { RematchBracket } from './RematchBracket';
+import { TournamentPlacements } from './TournamentPlacements';
 
 const navItems = [
   ['TEAM', '#team'],
@@ -310,9 +311,11 @@ export function App() {
 
         <RematchBracket rematch={adminData.rematch} />
 
+        <TournamentPlacements />
+
         <CampaignBanner image="./assets/banners/precision-awp.png" label="PRECISION // LONG SIGHTLINE" title="EVERY ANGLE IS WATCHED." caption="ONE ROUND AT A TIME // LIVE FROM COLORADO" position="center 42%" />
 
-        <section id="hype" className="section section--hype" aria-labelledby="hype-title"><div className="hype-heading" data-reveal><div><SectionLabel light>LANFEST // ON REPLAY</SectionLabel><h2 id="hype-title">WATCH THE<br /><em>ROOM ERUPT.</em></h2></div><p>Real streams from FragWatch. Every round, right from the room.</p></div><div className="clip-grid">{clips.map((clip, index) => <div className="clip-reveal" key={clip.videoId} data-reveal style={{ '--reveal-delay': `${index * 90}ms` }}><ClipCard clip={clip} onPlay={setActiveClip} /></div>)}</div></section>
+        <section id="hype" className="section section--hype" aria-labelledby="hype-title"><div className="hype-heading" data-reveal><div><SectionLabel light>HANOSANDY // FRAGWATCH REPLAYS</SectionLabel><h2 id="hype-title">WATCH THE<br /><em>ROOM ERUPT.</em></h2></div><p>Actual LANFest tournament streams from HanoSandy's FragWatch channel, including our Battlefield 4 and Overwatch runs.</p></div><div className="clip-grid">{clips.map((clip, index) => <div id={`clip-${clip.videoId}`} className="clip-reveal" key={clip.videoId} data-reveal style={{ '--reveal-delay': `${index * 90}ms`, scrollMarginTop: '90px' }}><ClipCard clip={clip} onPlay={setActiveClip} /></div>)}</div></section>
 
         <section id="broadcast" className="section section--broadcast" aria-labelledby="broadcast-title"><div className="broadcast-intro" data-reveal><SectionLabel>LIVE EVENT FEED</SectionLabel><h2 id="broadcast-title">WATCH 8iT<br /><em>LIVE.</em></h2><p>Choose your angle. Official coverage, player POVs, and the post-match story all live here.</p><div className="broadcast-intro__rule" /><p className="broadcast-intro__micro">STREAM LINKS // EVENT DAY NETWORK</p></div><div className="channel-grid">{channels.map((channel, index) => <div id={`broadcast-${channel.handle}`} key={channel.handle} data-reveal style={{ '--reveal-delay': `${index * 100}ms` }}><ChannelPlayer channel={channel} /></div>)}</div></section>
 
