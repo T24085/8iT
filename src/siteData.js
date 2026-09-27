@@ -53,17 +53,20 @@ export const defaultRematch = {
   outcome: '8iT WON THE REMATCH',
   maps: [
     { name: 'Train', ourScore: '', opponentScore: '' },
-    { name: 'Map 02 — unconfirmed', ourScore: '', opponentScore: '' },
+    { name: 'Ancient', ourScore: '', opponentScore: '' },
   ],
 };
 
 export function hydrateRematch(saved) {
   const data = saved && typeof saved === 'object' && !Array.isArray(saved) ? saved : {};
   const maps = Array.isArray(data.maps) ? data.maps : [];
+  const hydratedMaps = defaultRematch.maps.map((map, index) => ({ ...map, ...(maps[index] && typeof maps[index] === 'object' ? maps[index] : {}) }));
+  const secondMapName = String(hydratedMaps[1].name ?? '').trim();
+  if (!secondMapName || /^Map\s*0?2\s*[—–-]\s*unconfirmed$/i.test(secondMapName)) hydratedMaps[1].name = 'Ancient';
   return {
     ...structuredClone(defaultRematch),
     ...data,
-    maps: defaultRematch.maps.map((map, index) => ({ ...map, ...(maps[index] && typeof maps[index] === 'object' ? maps[index] : {}) })),
+    maps: hydratedMaps,
   };
 }
 

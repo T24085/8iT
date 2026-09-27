@@ -25,7 +25,7 @@ export function RematchBracket({ rematch = defaultRematch }) {
         const hasScore = String(map?.ourScore ?? '').trim() !== '' && String(map?.opponentScore ?? '').trim() !== '';
         return <article className="rematch-map" key={index}>
           <div className="rematch-map__top"><span>MAP {String(index + 1).padStart(2, '0')}</span><small>FRIENDLY REMATCH</small></div>
-          <h3>{map?.name || `Map ${index + 1} — unconfirmed`}</h3>
+          <h3>{map?.name || defaultRematch.maps[index]?.name}</h3>
           <div className="rematch-map__teams"><span>8iT <b>{hasScore ? map.ourScore : '—'}</b></span><span>{opponent} <b>{hasScore ? map.opponentScore : '—'}</b></span></div>
           <p>{hasScore ? 'MAP SCORE // TEAM REPORTED' : 'ROUND SCORE // NOT REPORTED'}</p>
         </article>;

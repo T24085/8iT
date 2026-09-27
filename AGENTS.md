@@ -30,4 +30,4 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - In the CS2 recap, distinguish the verified 2–1 Swiss match record and #2-of-six Battlefy standings rank from the second-place podium finish reported directly by the team.
 - Use the supplied wide 8iT Counter-Strike banners as cinematic chapter breaks and hero media.
 - Preserve the black, off-white, and signal-red competitive identity, condensed display type, and existing data-rich sections.
-- Keep verified LANFest results and the later iBuyPowerBottoms friendly rematch visually and semantically separate. The team-reported rematch win does not change the official 2–1 record; do not invent map scores or the still-unconfirmed second map name.
+- Keep verified LANFest results and the later iBuyPowerBottoms friendly rematch visually and semantically separate. The team-reported rematch win does not change the official 2–1 record; the friendly maps are Train and Ancient, with map scores still unreported.
