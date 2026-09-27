@@ -1,5 +1,5 @@
 import { displayPlayerName } from './playerIdentity';
-import { recordedCompetitiveMaps, vertigoDeathmatch } from './recordedMatchStats';
+import { recordedCompetitiveMaps } from './recordedMatchStats';
 import './recorded-matches.css';
 
 function CompetitiveLineup({ map, team }) {
@@ -24,10 +24,6 @@ export function RecordedMatchStats() {
       <div className="recorded-maps__lineups">{map.teams.map((team) => <CompetitiveLineup key={team.label} map={map.map} team={team} />)}</div>
       <p className="recorded-maps__card-note">WINNER // {map.winner} <span>·</span> K/D/A = KILLS / DEATHS / ASSISTS <span>·</span> DMG = TOTAL DAMAGE</p>
     </article>)}</div>
-    <article className="recorded-maps__deathmatch" data-reveal>
-      <div><span>BETWEEN COMPETITIVE MAPS // DEATHMATCH</span><h3>{vertigoDeathmatch.map}</h3><p>Individual points only—no team map score. This does not count as a competitive match result.</p></div>
-      <div className="recorded-maps__table-wrap"><table><caption className="sr-only">8iT player points on the Vertigo deathmatch</caption><thead><tr><th scope="col">PLAYER</th><th scope="col">POINTS</th><th scope="col">K / D / A</th></tr></thead><tbody>{vertigoDeathmatch.players.map((player) => <tr key={player.name}><th scope="row">{displayPlayerName(player.name)}</th><td>{player.points}</td><td>{player.kills} / {player.deaths} / {player.assists}</td></tr>)}</tbody></table></div>
-    </article>
     <p className="recorded-maps__end-note">A later map begins in the recording, but the capture cuts away before a final result. No outcome is listed for it.</p>
   </section>;
 }

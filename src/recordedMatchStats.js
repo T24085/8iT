@@ -47,25 +47,11 @@ export const recordedCompetitiveMaps = [
   },
 ];
 
-export const vertigoDeathmatch = {
-  map: 'Vertigo',
-  players: [
-    { name: 'PandaMonium', points: 285, kills: 27, deaths: 12, assists: 3 },
-    { name: 'Hanosandy', points: 281, kills: 28, deaths: 16, assists: 0 },
-    { name: 'ghettobird', points: 260, kills: 20, deaths: 16, assists: 0 },
-    { name: 'titan101', points: 224, kills: 15, deaths: 14, assists: 1 },
-    { name: 'Zixxy', points: 140, kills: 14, deaths: 21, assists: 0 },
-  ],
-};
-
 export function getRecordedPlayerStats(name) {
   const rosterName = rosterPlayerName(name).toLowerCase();
-  return {
-    maps: recordedCompetitiveMaps.map((map) => ({
-      map: map.map,
-      stats: map.teams.flatMap((team) => team.label.includes('8iT') ? team.players : [])
-        .find((player) => rosterPlayerName(player.name).toLowerCase() === rosterName),
-    })).filter((entry) => entry.stats),
-    deathmatch: vertigoDeathmatch.players.find((player) => rosterPlayerName(player.name).toLowerCase() === rosterName),
-  };
+  return recordedCompetitiveMaps.map((map) => ({
+    map: map.map,
+    stats: map.teams.flatMap((team) => team.label.includes('8iT') ? team.players : [])
+      .find((player) => rosterPlayerName(player.name).toLowerCase() === rosterName),
+  })).filter((entry) => entry.stats);
 }
