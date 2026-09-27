@@ -52,17 +52,35 @@ export const defaultRematch = {
   opponent: 'iBuyPowerBottoms',
   outcome: '8iT WON THE REMATCH',
   maps: [
-    { name: 'Train', ourScore: '', opponentScore: '' },
-    { name: 'Ancient', ourScore: '', opponentScore: '' },
+    { name: 'Train', ourScore: '13', opponentScore: '11' },
+    { name: 'Ancient', ourScore: '13', opponentScore: '9' },
   ],
 };
 
 export function hydrateRematch(saved) {
   const data = saved && typeof saved === 'object' && !Array.isArray(saved) ? saved : {};
   const maps = Array.isArray(data.maps) ? data.maps : [];
-  const hydratedMaps = defaultRematch.maps.map((map, index) => ({ ...map, ...(maps[index] && typeof maps[index] === 'object' ? maps[index] : {}) }));
+  const opponent = String(data.opponent ?? defaultRematch.opponent).trim().toLowerCase();
+  const knownOpponent = opponent === defaultRematch.opponent.toLowerCase();
+  const hydratedMaps = defaultRematch.maps.map((map, index) => {
+    const savedMap = maps[index] && typeof maps[index] === 'object' ? maps[index] : null;
+    return {
+      ...map,
+      ...(!knownOpponent || savedMap ? { ourScore: '', opponentScore: '' } : {}),
+      ...savedMap,
+    };
+  });
   const secondMapName = String(hydratedMaps[1].name ?? '').trim();
   if (!secondMapName || /^Map\s*0?2\s*[—–-]\s*unconfirmed$/i.test(secondMapName)) hydratedMaps[1].name = 'Ancient';
+  // Existing same-browser admin saves may still contain the earlier blank placeholders.
+  // Fill only completely blank known maps; preserve partial or custom score edits.
+  if (knownOpponent) hydratedMaps.forEach((map, index) => {
+    if (map.name.toLowerCase() === defaultRematch.maps[index].name.toLowerCase()
+      && String(map.ourScore ?? '').trim() === '' && String(map.opponentScore ?? '').trim() === '') {
+      map.ourScore = defaultRematch.maps[index].ourScore;
+      map.opponentScore = defaultRematch.maps[index].opponentScore;
+    }
+  });
   return {
     ...structuredClone(defaultRematch),
     ...data,
