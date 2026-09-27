@@ -161,6 +161,7 @@ h1 em, h2 em { color: var(--red); font-style: normal; }
 .bracket-match span + span { border-top: 1px solid var(--line); margin-top: 6px; padding-top: 6px; }
 .bracket-match b { color: #fff; }
 .bracket-match small { color: var(--red); display: block; font-size: 7px; font-weight: 700; letter-spacing: 0.14em; margin-top: 8px; }
+.bracket-panel__note { border-top: 1px solid var(--line); color: #989ca2; font-size: 9px; font-weight: 700; letter-spacing: 0.15em; margin: 8px 0 0; padding-top: 15px; }
 .poll-panel { align-items: center; display: grid; gap: 45px; grid-column: 1 / -1; grid-row: 3; grid-template-columns: 0.7fr 1.3fr; padding: 28px; }
 .poll-panel h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 39px; font-style: italic; line-height: 0.86; margin: 0 0 12px; }
 .poll-panel h3 em { color: var(--red); font-style: normal; }

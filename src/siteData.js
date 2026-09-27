@@ -36,6 +36,32 @@ export const defaultBracket = [
   { title: 'GRAND FINAL', rows: [['TBD', '—', 'TBD', '—', 'SUNDAY']] },
 ];
 
+// Official Battlefy Swiss results: match wins, not Counter-Strike round scores.
+export const official8itResults = [
+  { round: 1, opponent: 'OHM Gaming', result: 'WIN', seriesScore: '1–0' },
+  { round: 2, opponent: 'iBuyPowerBottoms', result: 'LOSS', seriesScore: '0–1' },
+  { round: 3, opponent: 'n00bs', result: 'WIN', seriesScore: '1–0' },
+];
+
+export const defaultRematch = {
+  opponent: 'iBuyPowerBottoms',
+  outcome: '8iT WON THE REMATCH',
+  maps: [
+    { name: 'Train', ourScore: '', opponentScore: '' },
+    { name: 'Map 02 — unconfirmed', ourScore: '', opponentScore: '' },
+  ],
+};
+
+export function hydrateRematch(saved) {
+  const data = saved && typeof saved === 'object' && !Array.isArray(saved) ? saved : {};
+  const maps = Array.isArray(data.maps) ? data.maps : [];
+  return {
+    ...structuredClone(defaultRematch),
+    ...data,
+    maps: defaultRematch.maps.map((map, index) => ({ ...map, ...(maps[index] && typeof maps[index] === 'object' ? maps[index] : {}) })),
+  };
+}
+
 const swissTeamNames = [
   '8iT', 'Masters', 'Northstar', 'Voltage', 'Redline', 'Ghost Protocol', 'Apex', 'Rival',
   'Sentinels', 'Vanguard', 'Nightshift', 'Overtime', 'Sidearm', 'Full Buy', 'Eco Kings', 'Clutch Unit',
@@ -166,6 +192,7 @@ export const emptyAdminData = {
   schedule: defaultSchedule.map((row) => [...row]),
   bracket: structuredClone(defaultBracket),
   swiss: structuredClone(defaultSwiss),
+  rematch: structuredClone(defaultRematch),
   killFeed: defaultKillFeed.map((row) => [...row]),
   liveMatch: { ...defaultLiveMatch },
 };
@@ -190,6 +217,7 @@ export function readAdminData() {
         teams: saved.swiss.teams,
         rounds: saved.swiss.rounds,
       } : structuredClone(defaultSwiss),
+      rematch: hydrateRematch(saved.rematch),
       killFeed: Array.isArray(saved.killFeed) ? saved.killFeed : emptyAdminData.killFeed,
     };
   } catch {

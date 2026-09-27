@@ -26,3 +26,4 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Hype-reel videos should autoplay muted and loop continuously inside their square tiles.
 - Use the supplied wide 8iT Counter-Strike banners as cinematic chapter breaks and hero media.
 - Preserve the black, off-white, and signal-red competitive identity, condensed display type, and existing data-rich sections.
+- Keep verified LANFest results and the later iBuyPowerBottoms friendly rematch visually and semantically separate. The team-reported rematch win does not change the official 2–1 record; do not invent map scores or the still-unconfirmed second map name.

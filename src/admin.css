@@ -59,6 +59,8 @@
 .admin-bracket-round > .admin-field { margin-bottom: 19px; }
 .admin-bracket-match { border-top: 1px solid var(--admin-line); display: grid; gap: 8px; grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 14px 0; }
 .admin-bracket-match .admin-field:nth-child(5) { grid-column: 1 / -1; }
+.admin-rematch-grid { display: grid; gap: 15px; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 19px; }
+.admin-rematch-grid .admin-kicker { margin-bottom: 17px; }
 .swiss-summary { display: grid; gap: 1px; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 15px; }
 .swiss-summary > div { background: #0e1013; border-top: 2px solid #24282e; display: flex; flex-direction: column; min-height: 140px; padding: 20px; }
 .swiss-summary > div:nth-child(3) { border-color: #19ca6d; }
@@ -128,7 +130,7 @@
   .admin-main { padding-left: 20px; padding-right: 20px; }
   .admin-hero { padding: 68px 0 48px; }
   .admin-hero h1 { font-size: 92px; }
-  .admin-fields--three, .admin-bracket-grid, .admin-table__labels, .admin-table__row, .admin-table__row--three, .admin-table__row--three + .admin-table__row { grid-template-columns: 1fr; }
+  .admin-fields--three, .admin-bracket-grid, .admin-rematch-grid, .admin-table__labels, .admin-table__row, .admin-table__row--three, .admin-table__row--three + .admin-table__row { grid-template-columns: 1fr; }
   .admin-mark span { display: none; }
   .admin-table__labels { display: none; }
   .admin-table__row { gap: 12px; }
