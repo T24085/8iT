@@ -22,10 +22,13 @@ const channels = [
 ];
 
 const clips = [
-  { title: '12 INSANE CLUTCHES', detail: 'ESL PRO LEAGUE // THE ROUND IS NEVER OVER', channel: 'ESL Counter-Strike', videoId: '5gj1km4uZ2Y', duration: '12:18' },
-  { title: 'BEST CLUTCHES', detail: 'BLAST PREMIER 2025 // ICE IN THE VEINS', channel: 'BLAST Premier', videoId: 'fhOvqTmJ5Bw', duration: '09:42' },
-  { title: 'JT INSANE CLUTCH', detail: 'IEM COLOGNE // ONE PLAYER, NO EXIT', channel: 'ESL Counter-Strike Highlights', videoId: 'D-0YnpTVMsQ', duration: '02:14' },
-  { title: 'OPEN LISBON MOMENTS', detail: 'BLAST PREMIER // PURE COUNTER-STRIKE', channel: 'BLAST Premier', videoId: 'Y4zuv0gf3M4', duration: '08:31' },
+  { title: 'FINALS RECHALLENGE', detail: 'INTEL LANFEST // CS2 BO3', channel: 'FragWatch', videoId: 'ywbbg1le968', duration: '1:57:15' },
+  { title: 'CS2 TOURNAMENT', detail: 'INTEL LANFEST // TOURNAMENT BROADCAST', channel: 'FragWatch', videoId: 'vblxVNYXKts', duration: '2:15:36' },
+  { title: 'FALL GUYS TOURNAMENT', detail: 'INTEL LANFEST // TOURNAMENT BROADCAST', channel: 'FragWatch', videoId: 'GfexIMBER98', duration: '42:56' },
+  { title: 'OVERWATCH TOURNAMENT', detail: 'INTEL LANFEST // TOURNAMENT BROADCAST', channel: 'FragWatch', videoId: 'TkT2AEMJTxY', duration: '1:56:10' },
+  { title: 'LANFEST WARM UP', detail: 'INTEL LANFEST // EVENT STREAM', channel: 'FragWatch', videoId: 'eoy8r2qTxxY', duration: '1:15:07' },
+  { title: 'BATTLEFIELD 4 TOURNAMENT', detail: 'INTEL LANFEST // TOURNAMENT BROADCAST', channel: 'FragWatch', videoId: '9Hi45_bZdv0', duration: '3:43:00' },
+  { title: 'LANFEST WARM UP', detail: 'INTEL LANFEST // EVENT STREAM', channel: 'FragWatch', videoId: 'iG2AEHIWKcc', duration: '1:58:32' },
 ];
 
 const ticketTiers = [
@@ -171,7 +174,7 @@ function ClipCard({ clip, onPlay }) {
   return (
     <article className="clip-card">
       <div className="clip-card__visual">
-        <iframe src={`https://www.youtube-nocookie.com/embed/${clip.videoId}?autoplay=1&mute=1&loop=1&playlist=${clip.videoId}&controls=0&modestbranding=1&playsinline=1&rel=0`} title={`${clip.title} looping preview`} allow="autoplay; encrypted-media; picture-in-picture" tabIndex="-1" />
+        <iframe src={`https://www.youtube-nocookie.com/embed/${clip.videoId}?autoplay=1&mute=1&loop=1&playlist=${clip.videoId}&controls=0&modestbranding=1&playsinline=1&rel=0`} title={`${clip.title} looping preview`} allow="autoplay; encrypted-media; picture-in-picture" loading="lazy" tabIndex="-1" />
         <span className="clip-card__shade" />
         <button className="clip-card__hitarea" type="button" onClick={() => onPlay(clip)} aria-label={`Open ${clip.title}`} />
         <span className="clip-card__duration">{clip.duration}</span>
@@ -309,7 +312,7 @@ export function App() {
 
         <CampaignBanner image="./assets/banners/precision-awp.png" label="PRECISION // LONG SIGHTLINE" title="EVERY ANGLE IS WATCHED." caption="ONE ROUND AT A TIME // LIVE FROM COLORADO" position="center 42%" />
 
-        <section id="hype" className="section section--hype" aria-labelledby="hype-title"><div className="hype-heading" data-reveal><div><SectionLabel light>WARMUP // NO BRAKES</SectionLabel><h2 id="hype-title">WATCH THE<br /><em>ROOM ERUPT.</em></h2></div><p>Borrow the nerve. Bring your own.</p></div><div className="clip-grid">{clips.map((clip, index) => <div className="clip-reveal" key={clip.videoId} data-reveal style={{ '--reveal-delay': `${index * 90}ms` }}><ClipCard clip={clip} onPlay={setActiveClip} /></div>)}</div></section>
+        <section id="hype" className="section section--hype" aria-labelledby="hype-title"><div className="hype-heading" data-reveal><div><SectionLabel light>LANFEST // ON REPLAY</SectionLabel><h2 id="hype-title">WATCH THE<br /><em>ROOM ERUPT.</em></h2></div><p>Real streams from FragWatch. Every round, right from the room.</p></div><div className="clip-grid">{clips.map((clip, index) => <div className="clip-reveal" key={clip.videoId} data-reveal style={{ '--reveal-delay': `${index * 90}ms` }}><ClipCard clip={clip} onPlay={setActiveClip} /></div>)}</div></section>
 
         <section id="broadcast" className="section section--broadcast" aria-labelledby="broadcast-title"><div className="broadcast-intro" data-reveal><SectionLabel>LIVE EVENT FEED</SectionLabel><h2 id="broadcast-title">WATCH 8iT<br /><em>LIVE.</em></h2><p>Choose your angle. Official coverage, player POVs, and the post-match story all live here.</p><div className="broadcast-intro__rule" /><p className="broadcast-intro__micro">STREAM LINKS // EVENT DAY NETWORK</p></div><div className="channel-grid">{channels.map((channel, index) => <div id={`broadcast-${channel.handle}`} key={channel.handle} data-reveal style={{ '--reveal-delay': `${index * 100}ms` }}><ChannelPlayer channel={channel} /></div>)}</div></section>
 
