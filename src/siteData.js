@@ -1,3 +1,5 @@
+import { officialTournamentBrackets } from './tournamentBrackets.js';
+
 export const ADMIN_STORAGE_KEY = '8it-admin-data-v1';
 
 export const defaultEvent = {
@@ -30,18 +32,21 @@ export const defaultSchedule = [
   ['04', 'SUN 27', 'FINALS', 'No safe rounds. No quiet exits.'],
 ];
 
-export const defaultBracket = [
-  { title: 'OPENING ROUND', rows: [['8iT', '12', 'Masters', '09', 'FINAL'], ['Northstar', '08', 'Voltage', '13', 'FINAL'], ['Redline', '13', 'Ghost Protocol', '11', 'FINAL']] },
-  { title: 'SEMIFINAL', rows: [['8iT', '—', 'Voltage', '—', 'UP NEXT'], ['TBD', '—', 'TBD', '—', 'LOCKED']] },
-  { title: 'GRAND FINAL', rows: [['TBD', '—', 'TBD', '—', 'SUNDAY']] },
-];
+const cs2Bracket = officialTournamentBrackets[0];
 
-// Official Battlefy Swiss results: match wins, not Counter-Strike round scores.
-export const official8itResults = [
-  { round: 1, opponent: 'OHM Gaming', result: 'WIN', seriesScore: '1–0' },
-  { round: 2, opponent: 'iBuyPowerBottoms', result: 'LOSS', seriesScore: '0–1' },
-  { round: 3, opponent: 'n00bs', result: 'WIN', seriesScore: '1–0' },
-];
+// Official Battlefy Swiss results: series/map wins, not Counter-Strike round scores.
+export const official8itResults = cs2Bracket.rounds.map((round) => {
+  const match = round.matches.find((row) => row.teamA === cs2Bracket.teamName || row.teamB === cs2Bracket.teamName);
+  const onTop = match.teamA === cs2Bracket.teamName;
+  const ourScore = onTop ? match.scoreA : match.scoreB;
+  const theirScore = onTop ? match.scoreB : match.scoreA;
+  return {
+    round: round.number,
+    opponent: onTop ? match.teamB : match.teamA,
+    result: ourScore > theirScore ? 'WIN' : 'LOSS',
+    seriesScore: `${ourScore}–${theirScore}`,
+  };
+});
 
 export const defaultRematch = {
   opponent: 'iBuyPowerBottoms',
@@ -63,9 +68,10 @@ export function hydrateRematch(saved) {
 }
 
 const swissTeamNames = [
-  '8iT', 'Masters', 'Northstar', 'Voltage', 'Redline', 'Ghost Protocol', 'Apex', 'Rival',
-  'Sentinels', 'Vanguard', 'Nightshift', 'Overtime', 'Sidearm', 'Full Buy', 'Eco Kings', 'Clutch Unit',
+  'iBuyPowerBottoms', '8iT - Eight Inches and Thick', 'OHM Gaming',
+  'Grumpy Old Buttz', 'n00bs', 'Team Sean Connery',
 ];
+const swissTeamIds = new Map(swissTeamNames.map((name, index) => [name, `team-${index + 1}`]));
 
 export const createSwissMatch = (roundNumber, matchNumber, teamAId = '', teamBId = '') => ({
   id: `r${roundNumber}-m${matchNumber}`,
@@ -81,29 +87,30 @@ export const createSwissMatch = (roundNumber, matchNumber, teamAId = '', teamBId
   note: '',
 });
 
-const roundMatchCounts = [8, 8, 8, 6, 3];
-
 export const defaultSwiss = {
   settings: {
-    stageName: 'SWISS STAGE',
-    ruleset: 'ESL CS2 // BO1 MR12',
+    stageName: 'CS2 LANFEST 2026',
+    ruleset: 'BATTLEFY // BO1 SWISS',
     bestOf: 1,
     regulationRounds: 13,
     overtimeFormat: 'MR3',
     advanceWins: 3,
     eliminateLosses: 3,
-    maxRounds: 5,
+    maxRounds: 3,
   },
   teams: swissTeamNames.map((name, index) => ({ id: `team-${index + 1}`, seed: index + 1, name })),
-  rounds: roundMatchCounts.map((matchCount, roundIndex) => ({
-    id: `round-${roundIndex + 1}`,
-    name: `ROUND ${roundIndex + 1}`,
-    status: roundIndex === 0 ? 'UPCOMING' : 'LOCKED',
-    matches: Array.from({ length: matchCount }, (_, matchIndex) => {
-      const teamAId = roundIndex === 0 ? `team-${matchIndex + 1}` : '';
-      const teamBId = roundIndex === 0 ? `team-${16 - matchIndex}` : '';
-      return createSwissMatch(roundIndex + 1, matchIndex + 1, teamAId, teamBId);
-    }),
+  rounds: cs2Bracket.rounds.map((round) => ({
+    id: `round-${round.number}`,
+    name: `ROUND ${round.number}`,
+    status: 'COMPLETE',
+    matches: round.matches.map((match) => ({
+      ...createSwissMatch(round.number, match.number, swissTeamIds.get(match.teamA), swissTeamIds.get(match.teamB)),
+      matchNumber: match.number,
+      scoreA: match.scoreA,
+      scoreB: match.scoreB,
+      map: '',
+      status: 'FINAL',
+    })),
   })),
 };
 
@@ -116,6 +123,8 @@ const numericScore = (value) => {
 export function deriveSwissStandings(swiss = defaultSwiss) {
   const teams = Array.isArray(swiss.teams) ? swiss.teams : [];
   const settings = { ...defaultSwiss.settings, ...(swiss.settings || {}) };
+  const stageComplete = (swiss.rounds || []).length > 0 && (swiss.rounds || []).every((round) =>
+    (round.matches || []).length > 0 && round.matches.every((match) => match.status === 'FINAL' || match.status === 'FORFEIT'));
   const table = new Map(teams.map((team) => [team.id, {
     id: team.id,
     seed: Number(team.seed) || 0,
@@ -149,7 +158,7 @@ export function deriveSwissStandings(swiss = defaultSwiss) {
     ...row,
     roundDiff: row.roundsFor - row.roundsAgainst,
     buchholz: row.opponents.reduce((total, opponentId) => total + (table.get(opponentId)?.wins || 0), 0),
-    state: row.wins >= settings.advanceWins ? 'ADVANCED' : row.losses >= settings.eliminateLosses ? 'ELIMINATED' : 'ACTIVE',
+    state: stageComplete ? 'FINAL' : row.wins >= settings.advanceWins ? 'ADVANCED' : row.losses >= settings.eliminateLosses ? 'ELIMINATED' : 'ACTIVE',
   }));
 
   return rows.sort((a, b) => b.wins - a.wins || a.losses - b.losses || b.buchholz - a.buchholz || b.roundDiff - a.roundDiff || a.seed - b.seed);
@@ -164,7 +173,8 @@ export function swissToPublicBracket(swiss = defaultSwiss) {
       match.scoreA === '' ? '—' : String(match.scoreA),
       teamNames.get(match.teamBId) || 'TBD',
       match.scoreB === '' ? '—' : String(match.scoreB),
-      `${match.map || 'TBD'} // ${match.status}${match.overtime ? ' // OT' : ''}`,
+      `${match.map && match.map !== 'TBD' ? `${match.map} // ` : ''}${match.status}${match.overtime ? ' // OT' : ''}`,
+      match.matchNumber || Number(match.id?.split('-m')[1]) || 0,
     ]),
   }));
 }
@@ -190,12 +200,25 @@ export const emptyAdminData = {
   event: { ...defaultEvent },
   roster: defaultRoster.map((player) => [...player]),
   schedule: defaultSchedule.map((row) => [...row]),
-  bracket: structuredClone(defaultBracket),
   swiss: structuredClone(defaultSwiss),
   rematch: structuredClone(defaultRematch),
   killFeed: defaultKillFeed.map((row) => [...row]),
   liveMatch: { ...defaultLiveMatch },
 };
+
+export function hydrateSwiss(savedSwiss) {
+  if (!savedSwiss || !Array.isArray(savedSwiss.teams) || !Array.isArray(savedSwiss.rounds)
+    || savedSwiss.teams.length !== defaultSwiss.teams.length || savedSwiss.rounds.length !== defaultSwiss.rounds.length) {
+    return structuredClone(defaultSwiss);
+  }
+  return {
+    ...structuredClone(defaultSwiss),
+    ...savedSwiss,
+    settings: { ...defaultSwiss.settings, ...(savedSwiss.settings || {}) },
+    teams: savedSwiss.teams,
+    rounds: savedSwiss.rounds,
+  };
+}
 
 export function readAdminData() {
   if (typeof window === 'undefined') return emptyAdminData;
@@ -209,14 +232,7 @@ export function readAdminData() {
       liveMatch: { ...emptyAdminData.liveMatch, ...(saved.liveMatch || {}) },
       roster: Array.isArray(saved.roster) ? saved.roster : emptyAdminData.roster,
       schedule: Array.isArray(saved.schedule) ? saved.schedule : emptyAdminData.schedule,
-      bracket: Array.isArray(saved.bracket) ? saved.bracket : emptyAdminData.bracket,
-      swiss: saved.swiss && Array.isArray(saved.swiss.teams) && Array.isArray(saved.swiss.rounds) ? {
-        ...structuredClone(defaultSwiss),
-        ...saved.swiss,
-        settings: { ...defaultSwiss.settings, ...(saved.swiss.settings || {}) },
-        teams: saved.swiss.teams,
-        rounds: saved.swiss.rounds,
-      } : structuredClone(defaultSwiss),
+      swiss: hydrateSwiss(saved.swiss),
       rematch: hydrateRematch(saved.rematch),
       killFeed: Array.isArray(saved.killFeed) ? saved.killFeed : emptyAdminData.killFeed,
     };

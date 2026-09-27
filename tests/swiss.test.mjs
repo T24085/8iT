@@ -1,59 +1,53 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { defaultSwiss, deriveSwissStandings, swissToPublicBracket } from '../src/siteData.js';
+import { defaultSwiss, deriveSwissStandings, hydrateSwiss, swissToPublicBracket } from '../src/siteData.js';
+import { getTeamRecord, officialTournamentBrackets } from '../src/tournamentBrackets.js';
 
 const clone = (value) => structuredClone(value);
 
-test('final Swiss results update records, rounds, and Buchholz', () => {
-  const swiss = clone(defaultSwiss);
-  const [first, second] = swiss.rounds[0].matches;
-  Object.assign(first, { scoreA: 13, scoreB: 9, status: 'FINAL' });
-  Object.assign(second, { scoreA: 10, scoreB: 13, status: 'FINAL' });
-
-  const standings = deriveSwissStandings(swiss);
-  const teamOne = standings.find((team) => team.id === first.teamAId);
-  const teamSixteen = standings.find((team) => team.id === first.teamBId);
-
-  assert.equal(teamOne.wins, 1);
-  assert.equal(teamOne.roundDiff, 4);
-  assert.equal(teamSixteen.losses, 1);
-  assert.equal(teamSixteen.roundDiff, -4);
-  assert.equal(teamOne.buchholz, teamSixteen.wins);
+test('the three public brackets contain the completed Battlefy rounds and team records', () => {
+  assert.deepEqual(officialTournamentBrackets.map((bracket) => bracket.rounds.map((round) => round.matches.length)), [
+    [3, 3, 3], [3, 3, 3], [4, 4, 4],
+  ]);
+  assert.deepEqual(officialTournamentBrackets.map((bracket) => bracket.bestOf), [1, 1, 3]);
+  assert.deepEqual(officialTournamentBrackets.map(getTeamRecord), [
+    { wins: 2, losses: 1 }, { wins: 2, losses: 1 }, { wins: 2, losses: 1 },
+  ]);
+  assert.ok(officialTournamentBrackets.every((bracket) => bracket.rounds.every((round) => round.matches.every((match) => match.status === 'FINAL'))));
 });
 
-test('three wins advances and three losses eliminates', () => {
-  const swiss = clone(defaultSwiss);
-  for (let roundIndex = 0; roundIndex < 3; roundIndex += 1) {
-    Object.assign(swiss.rounds[roundIndex].matches[0], {
-      teamAId: 'team-1',
-      teamBId: `team-${16 - roundIndex}`,
-      scoreA: 13,
-      scoreB: 7,
-      status: 'FINAL',
-    });
-  }
-
-  const standings = deriveSwissStandings(swiss);
-  assert.equal(standings.find((team) => team.id === 'team-1').state, 'ADVANCED');
-
-  for (let roundIndex = 0; roundIndex < 3; roundIndex += 1) {
-    swiss.rounds[roundIndex].matches[1] = {
-      ...swiss.rounds[roundIndex].matches[1],
-      teamAId: 'team-2',
-      teamBId: `team-${12 - roundIndex}`,
-      scoreA: 5,
-      scoreB: 13,
-      status: 'FINAL',
-    };
-  }
-
-  assert.equal(deriveSwissStandings(swiss).find((team) => team.id === 'team-2').state, 'ELIMINATED');
+test('CS2 editor starts with six real teams, three completed rounds, and no invented maps', () => {
+  assert.equal(defaultSwiss.teams.length, 6);
+  assert.equal(defaultSwiss.rounds.length, 3);
+  assert.deepEqual(defaultSwiss.rounds.map((round) => round.matches.length), [3, 3, 3]);
+  assert.ok(defaultSwiss.rounds.every((round) => round.status === 'COMPLETE' && round.matches.every((match) => match.status === 'FINAL' && match.map === '')));
+  const standings = deriveSwissStandings(defaultSwiss);
+  assert.deepEqual(standings.map(({ name, wins, losses }) => [name, wins, losses]), [
+    ['iBuyPowerBottoms', 3, 0],
+    ['8iT - Eight Inches and Thick', 2, 1],
+    ['OHM Gaming', 2, 1],
+    ['Grumpy Old Buttz', 1, 2],
+    ['n00bs', 1, 2],
+    ['Team Sean Connery', 0, 3],
+  ]);
+  assert.ok(standings.every((row) => row.state === 'FINAL'));
 });
 
-test('public bracket resolves stable team ids to current team names', () => {
+test('an older 16-team local demo bracket is replaced without changing the new source data', () => {
+  const old = { teams: Array.from({ length: 16 }, (_, index) => ({ id: `team-${index + 1}`, name: `Demo ${index + 1}` })), rounds: Array.from({ length: 5 }, () => ({ matches: [] })) };
+  const restored = hydrateSwiss(old);
+  assert.equal(restored.teams.length, 6);
+  assert.equal(restored.rounds.length, 3);
+  assert.notEqual(restored.rounds, defaultSwiss.rounds);
+});
+
+test('same-browser CS2 edits remain visible in the public bracket', () => {
   const swiss = clone(defaultSwiss);
-  swiss.teams[0].name = 'RENAMED 8iT';
+  swiss.teams[1].name = 'RENAMED 8iT';
+  swiss.rounds[0].matches[2].scoreA = 0;
+  swiss.rounds[0].matches[2].scoreB = 1;
   const publicBracket = swissToPublicBracket(swiss);
-  assert.equal(publicBracket[0].rows[0][0], 'RENAMED 8iT');
-  assert.match(publicBracket[0].title, /ROUND 1/);
+  assert.equal(publicBracket[0].rows[2][0], 'RENAMED 8iT');
+  assert.equal(publicBracket[0].rows[2][1], '0');
+  assert.equal(publicBracket[0].rows[2][5], 3);
 });

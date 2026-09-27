@@ -1,0 +1,26 @@
+.official-brackets__tabs { display: flex; gap: 6px; margin: 24px 0 18px; }
+.official-brackets__tabs button { background: #0b0d10; border: 1px solid var(--line); color: #a7aab1; cursor: pointer; display: flex; flex: 1; font-size: 13px; font-weight: 700; justify-content: space-between; letter-spacing: 0.1em; min-width: 0; padding: 13px 14px; text-align: left; transition: background 180ms ease, border-color 180ms ease, color 180ms ease; }
+.official-brackets__tabs button span { color: #737881; font-size: 8px; letter-spacing: 0.12em; margin-left: 8px; white-space: nowrap; }
+.official-brackets__tabs button:hover, .official-brackets__tabs button:focus-visible, .official-brackets__tabs button.is-active { background: rgba(239, 11, 40, 0.14); border-color: var(--red); color: #fff; }
+.official-brackets__tabs button.is-active span { color: #fff; }
+.official-brackets__summary { align-items: end; display: flex; gap: 20px; justify-content: space-between; }
+.official-brackets__summary h3 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(30px, 3.4vw, 48px); font-style: italic; line-height: 0.95; margin: 0 0 7px; }
+.official-brackets__summary p { color: #858990; font-size: 9px; font-weight: 700; letter-spacing: 0.11em; margin: 0; }
+.official-brackets__summary p span { color: var(--red); margin: 0 5px; }
+.official-brackets__summary > strong { color: #b9bdc2; flex: none; font-size: 11px; letter-spacing: 0.1em; white-space: nowrap; }
+.official-brackets__summary > strong em { color: #fff; font-family: 'Barlow Condensed', sans-serif; font-size: 36px; font-style: italic; letter-spacing: 0; margin-left: 5px; }
+.official-brackets__rounds { margin-top: 22px; }
+.official-brackets__rounds .bracket-match { padding: 10px 11px; }
+.official-brackets__rounds .bracket-match--8it { border-color: rgba(239, 11, 40, 0.85); box-shadow: inset 3px 0 0 var(--red); }
+.official-brackets__rounds .bracket-match small { color: #8e929a; margin: 0 0 10px; }
+.official-brackets__rounds .bracket-match span { gap: 9px; letter-spacing: 0; line-height: 1.3; overflow-wrap: anywhere; }
+.official-brackets__rounds .bracket-match span.is-winner { color: #fff; font-weight: 700; }
+.official-brackets__rounds .bracket-match span:not(.is-winner) { color: #858990; }
+.official-brackets__rounds .bracket-match b { color: inherit; flex: none; font-size: 12px; }
+.official-brackets__footer { align-items: end; border-top: 1px solid var(--line); display: flex; gap: 24px; justify-content: space-between; margin-top: 14px; padding-top: 14px; }
+.official-brackets__footer p { color: #9da0a6; font-size: 10px; line-height: 1.35; margin: 0; max-width: 490px; }
+.official-brackets__footer a { color: #fff; flex: none; font-size: 9px; font-weight: 700; letter-spacing: 0.12em; white-space: nowrap; }
+.official-brackets__footer a i { color: var(--red); margin-left: 6px; }
+.official-brackets__footer a:hover, .official-brackets__footer a:focus-visible { color: var(--red); }
+@media (max-width: 1150px) { .official-brackets__tabs button { align-items: start; flex-direction: column; gap: 3px; } .official-brackets__tabs button span { margin-left: 0; } }
+@media (max-width: 700px) { .official-brackets__summary, .official-brackets__footer { align-items: start; flex-direction: column; } .official-brackets__tabs button { padding: 10px; } .official-brackets__tabs button span { font-size: 7px; } }

@@ -14,7 +14,8 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Keep the hero copy container transparent so the background artwork remains visible; use a light image veil and localized text shadow for legibility.
 - Use the supplied official 8iT logo asset for visible brand marks; do not recreate the logo with styled text.
 - Keep the hype-reel clips as equal square tiles in a gapless, edge-to-edge grid.
-- Keep tournament operations based on a 16-team, five-round BO1 Swiss stage: three wins advances, three losses eliminates, with editable team names, match results, and derived standings in the admin control room.
+- Use Battlefy's completed 2026 LANFest stages for the official brackets: CS2 and Battlefield 4 each have six teams, three BO1 rounds, and nine matches; Overwatch 2 has eight teams, three BO3 rounds, and twelve matches. Keep CS2 team names and match results editable in the same-browser admin control room; migrate old 16-team demo saves to the official defaults.
+- Label bracket scores as match-series/map wins, not CS2 in-game rounds or Battlefield 4 tickets. Do not invent map names or underlying round/ticket scores. Keep the later friendly CS2 rematch outside all official brackets.
 - Use `public/assets/matches-swiss-background.png` as the full-bleed background for the Event Rhythm schedule section, with a dark readability veil over the image.
 - Use `public/assets/about-team-background.png` as the full-bleed background for the Play Hard. Do Good. section, preserving readable copy and venue information over the team image.
 - Keep the Play Hard. Do Good. image visibly bright through the overlay; use localized contrast instead of a heavy section-wide blackout.

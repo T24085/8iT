@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { ADMIN_STORAGE_KEY, defaultBracket as bracket, defaultEvent as event, defaultKillFeed as killFeed, defaultLiveMatch, defaultRoster as roster, defaultSchedule as schedule, readAdminData, swissToPublicBracket } from './siteData';
+import { ADMIN_STORAGE_KEY, defaultEvent as event, defaultKillFeed as killFeed, defaultLiveMatch, defaultRoster as roster, defaultSchedule as schedule, defaultSwiss, readAdminData, swissToPublicBracket } from './siteData';
 import { RematchBracket } from './RematchBracket';
 import { TournamentPlacements } from './TournamentPlacements';
+import { OfficialBracketPanel } from './OfficialBracketPanel';
 
 const navItems = [
   ['TEAM', '#team'],
@@ -92,7 +93,7 @@ function PlayerSpotlight({ player, onClose }) {
   return <div className="player-modal" role="presentation" onClick={onClose}><div className="player-modal__inner" role="dialog" aria-modal="true" aria-labelledby="player-modal-title" onClick={(event) => event.stopPropagation()}><button className="clip-modal__close" type="button" onClick={onClose} aria-label="Close player profile"><i className="fa-solid fa-xmark" aria-hidden="true" /></button><div className="player-modal__visual"><img src={media.portrait} alt={`${player.name} player portrait`} /><small>8iT // PLAYER FILE</small></div><div className="player-modal__copy">{media.banner && <div className="player-modal__banner" style={{ backgroundImage: `url("${media.banner}")` }} aria-hidden="true" />}<p className="eyebrow eyebrow--light"><span className="slash" />{profile.tagline}</p><h2 id="player-modal-title">{player.name}</h2><p>{profile.bio}</p><div className="player-modal__stats">{profile.stats.map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}</div>{streamUrl && <div className="player-modal__stream"><div><span><i /> PLAYER STREAM</span><small>{stream.platform} // {stream.handle}</small></div><iframe src={streamUrl} title={`${stream.handle} ${stream.platform} player stream`} allow="autoplay; fullscreen; encrypted-media" allowFullScreen /></div>}</div></div></div>;
 }
 
-function LiveMatchCenter({ bracketData = bracket, killFeedData = killFeed, liveMatchData = defaultLiveMatch, onPulse }) {
+function LiveMatchCenter({ bracketData, cs2Edited, cs2TeamName, killFeedData = killFeed, liveMatchData = defaultLiveMatch, onPulse }) {
   const [feedIndex, setFeedIndex] = useState(0);
   const [votes, setVotes] = useState({ PandaMonium: 52, ghettobirdz: 31, Titan101: 17 });
   const [voted, setVoted] = useState(false);
@@ -102,9 +103,9 @@ function LiveMatchCenter({ bracketData = bracket, killFeedData = killFeed, liveM
   const vote = (player) => { if (voted) return; setVotes((current) => ({ ...current, [player]: current[player] + 1 })); setVoted(true); onPulse?.(); };
   const currentFeed = killFeedData[feedIndex] || killFeed[0];
   return <section id="intel" className="section section--intel" aria-labelledby="intel-title">
-    <div className="intel-heading" data-reveal><p className="eyebrow"><span className="slash" />LIVE SYSTEM // EVENT-DAY UI</p><h2 id="intel-title">THE ROUND<br /><em>NEVER SLEEPS.</em></h2><p>The live score and editable Swiss stage are UI previews. Verified 8iT results and the separate friendly rematch are below.</p><span className="intel-heading__status"><i /> DEMO SIGNAL // READY TO CONNECT</span></div>
+    <div className="intel-heading" data-reveal><p className="eyebrow"><span className="slash" />LANFEST // MATCH CENTER</p><h2 id="intel-title">THE ROUND<br /><em>NEVER SLEEPS.</em></h2><p>The live score and crowd poll are UI previews. The CS2 bracket starts with completed Battlefy results; Battlefield 4 and Overwatch 2 show their recorded matches.</p><span className="intel-heading__status"><i /> BATTLEFY BRACKETS // LIVE SCORE DEMO</span></div>
     <div className="intel-panel" data-reveal style={{ '--reveal-delay': '120ms' }}><div className="intel-panel__top"><span><i /> NOW PLAYING</span><strong>{currentFeed[0]} <em>{currentFeed[1]}</em></strong><small>{currentFeed[2]}</small></div><div className="score-card"><div><span>{match.teamA}</span><strong>{match.scoreA}</strong><small>ROUND WINNER</small></div><b>:</b><div><span>{match.teamB}</span><strong>{match.scoreB}</strong><small>{match.roundLabel}</small></div><div className="score-card__live"><i /> {match.status}</div></div><div className="round-meter"><span>ROUND PROGRESS</span><div><b style={{ width: `${match.progress}%` }} /></div><strong>{match.progress}%</strong></div><div className="kill-feed">{killFeedData.map(([actor, action, detail], index) => <div className={index === feedIndex ? 'is-current' : ''} key={`${actor}-${action}`}><span>{actor}</span><b>{action}</b><small>{detail}</small></div>)}</div></div>
-    <div className="bracket-panel" data-reveal style={{ '--reveal-delay': '200ms' }}><div className="bracket-panel__head"><p className="eyebrow"><span className="slash" />SWISS CONTROL ROOM // DEMO</p><span>BO1 // EDITABLE</span></div><div className="bracket-grid">{bracketData.map((round) => <div key={round.title}><h3>{round.title}</h3>{round.rows.map(([left, leftScore, right, rightScore, status], index) => <div className="bracket-match" key={`${round.title}-${index}`}><span>{left} <b>{leftScore}</b></span><span>{right} <b>{rightScore}</b></span><small>{status}</small></div>)}</div>)}</div><p className="bracket-panel__note">EXAMPLE PAIRINGS // NOT THE OFFICIAL LANFEST RESULTS</p></div>
+    <OfficialBracketPanel cs2Rounds={bracketData} cs2Edited={cs2Edited} cs2TeamName={cs2TeamName} />
     <div className="poll-panel" data-reveal style={{ '--reveal-delay': '280ms' }}><div><p className="eyebrow"><span className="slash" />CROWD CONTROL</p><h3>WHO GETS THE<br /><em>FINAL ANGLE?</em></h3><p>Vote for the POV you want to see next. One vote per session.</p></div><div className="poll-options">{Object.entries(votes).map(([player, count]) => <button type="button" className={voted ? 'is-voted' : ''} key={player} onClick={() => vote(player)}><span><b>{player}</b><small>{Math.round((count / totalVotes) * 100)}%</small></span><i><em style={{ width: `${(count / totalVotes) * 100}%` }} /></i></button>)}</div>{voted && <span className="poll-confirmation">VOTE LOCKED // THE ROOM HEARD YOU</span>}</div>
   </section>;
 }
@@ -197,7 +198,7 @@ export function App() {
   const currentEvent = { ...event, ...(adminData.event || {}) };
   const liveRoster = adminData.roster || roster;
   const liveSchedule = adminData.schedule || schedule;
-  const liveBracket = adminData.swiss?.rounds ? swissToPublicBracket(adminData.swiss) : adminData.bracket || bracket;
+  const liveBracket = swissToPublicBracket(adminData.swiss);
   const liveKillFeed = adminData.killFeed || killFeed;
 
   const emitPulse = (frequency = 110, duration = 0.14, force = false) => {
@@ -307,7 +308,7 @@ export function App() {
 
         <section id="matches" className="section section--schedule" aria-labelledby="schedule-title"><div className="schedule-heading" data-reveal><SectionLabel>EVENT RHYTHM</SectionLabel><h2 id="schedule-title">FOUR DAYS.<br /><em>ONE STORY.</em></h2><p>Times are coming. The pressure is already here.</p></div><div className="schedule-list">{liveSchedule.map(([number, day, title, copy], index) => <article className="schedule-row" key={number} data-reveal style={{ '--reveal-delay': `${index * 90}ms` }}><span className="schedule-row__number">{number}</span><span className="schedule-row__day">{day}</span><h3>{title}</h3><p>{copy}</p><span className="schedule-row__mark"><ArrowIcon direction="down" /></span></article>)}</div></section>
 
-        <LiveMatchCenter bracketData={liveBracket} killFeedData={liveKillFeed} liveMatchData={adminData.liveMatch} onPulse={() => emitPulse(92, 0.16)} />
+        <LiveMatchCenter bracketData={liveBracket} cs2Edited={JSON.stringify(adminData.swiss) !== JSON.stringify(defaultSwiss)} cs2TeamName={adminData.swiss.teams.find((team) => team.id === 'team-2')?.name || '8iT - Eight Inches and Thick'} killFeedData={liveKillFeed} liveMatchData={adminData.liveMatch} onPulse={() => emitPulse(92, 0.16)} />
 
         <RematchBracket rematch={adminData.rematch} />
 
