@@ -1,4 +1,5 @@
 import { rematchMaps, rematchPlayerStats } from './rematchStats';
+import { displayPlayerName } from './playerIdentity';
 import './rematch-stats.css';
 
 export function RematchStats() {
@@ -11,7 +12,7 @@ export function RematchStats() {
       <div className="rematch-stats__map-head"><span>MAP 0{index + 1} // FRIENDLY</span><h3>{map}</h3><small>8iT PLAYERS ONLY</small></div>
       <div className="rematch-stats__table-wrap"><table><caption className="sr-only">8iT player stats on {map} in the unofficial rematch</caption><thead><tr><th scope="col">PLAYER</th><th scope="col">SCORE</th><th scope="col">K / D / A</th><th scope="col">HS%</th></tr></thead><tbody>{rematchPlayerStats.map((player) => {
         const stats = player.maps[map];
-        return <tr key={player.name}><th scope="row">{player.name}</th><td>{stats.score}</td><td>{stats.kills} / {stats.deaths} / {stats.assists}</td><td>{stats.hs}%</td></tr>;
+        return <tr key={player.name}><th scope="row">{displayPlayerName(player.name)}</th><td>{stats.score}</td><td>{stats.kills} / {stats.deaths} / {stats.assists}</td><td>{stats.hs}%</td></tr>;
       })}</tbody></table></div>
     </div>)}</div>
     <p className="rematch-stats__note">K / D / A = kills / deaths / assists. These two maps are an exhibition only and do not change 8iT's 2–1 official CS2 record.</p>

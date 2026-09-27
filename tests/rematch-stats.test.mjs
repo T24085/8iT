@@ -19,6 +19,8 @@ test('roster lookups are case-insensitive and two-map K/D/A totals do not combin
   assert.deepEqual(getRematchTotals(getRematchPlayer('ghettobird')), { kills: 55, deaths: 28, assists: 6 });
   assert.deepEqual(getRematchTotals(getRematchPlayer('TITAN101')), { kills: 41, deaths: 28, assists: 4 });
   assert.deepEqual(getRematchTotals(getRematchPlayer('Hanosandy')), { kills: 24, deaths: 34, assists: 13 });
+  assert.deepEqual(getRematchTotals(getRematchPlayer('BitchStewie')), { kills: 30, deaths: 29, assists: 12 });
+  assert.equal(getRematchPlayer('BitchStewie'), getRematchPlayer('Zixxy'));
   assert.equal(getRematchPlayer('Hanosandy').maps.Ancient.hs, 21);
   assert.equal(getRematchTotals(getRematchPlayer('ghosted')), null);
 });

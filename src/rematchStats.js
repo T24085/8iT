@@ -1,3 +1,5 @@
+import { rosterPlayerName } from './playerIdentity.js';
+
 // Player numbers supplied in a screenshot of a prior post-map-card transcription
 // for the unofficial Train / Ancient rematch. Not independently verified.
 export const rematchPlayerStats = [
@@ -11,7 +13,7 @@ export const rematchPlayerStats = [
 export const rematchMaps = ['Train', 'Ancient'];
 
 export function getRematchPlayer(name) {
-  return rematchPlayerStats.find((player) => player.name.toLowerCase() === String(name).toLowerCase());
+  return rematchPlayerStats.find((player) => rosterPlayerName(player.name).toLowerCase() === rosterPlayerName(name).toLowerCase());
 }
 
 export function getRematchTotals(player) {

@@ -1,0 +1,45 @@
+.recorded-maps { background: radial-gradient(circle at 10% 30%, rgba(239, 11, 40, 0.11), transparent 38%), #090b0e; border-bottom: 1px solid var(--line); }
+.recorded-maps__intro { align-items: end; display: grid; gap: 35px; grid-template-columns: 1fr minmax(280px, 0.72fr); margin-bottom: 46px; }
+.section-intro__links { align-items: start; display: grid; gap: 12px; justify-items: start; }
+.recorded-maps__intro h2 { font-size: clamp(68px, 8vw, 124px); line-height: 0.84; margin: 0; }
+.recorded-maps__intro h2 em { color: var(--red); font-style: normal; }
+.recorded-maps__intro > p { color: #b7b9bf; font-size: 16px; line-height: 1.5; margin: 0; }
+.recorded-maps__list { display: grid; gap: 16px; }
+.recorded-maps__card { background: #111418; border: 1px solid var(--line); border-top: 3px solid var(--red); }
+.recorded-maps__card-head { align-items: end; border-bottom: 1px solid var(--line); display: flex; gap: 25px; justify-content: space-between; padding: 26px 30px 25px; }
+.recorded-maps__card-head > div:first-child > span, .recorded-maps__deathmatch > div:first-child > span { color: var(--red); font-size: 10px; font-weight: 700; letter-spacing: 0.16em; }
+.recorded-maps__card-head h3, .recorded-maps__deathmatch h3 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(48px, 6vw, 78px); font-style: italic; line-height: 0.88; margin: 12px 0 0; text-transform: uppercase; }
+.recorded-maps__score { align-items: baseline; display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; text-align: right; }
+.recorded-maps__score span { color: #dedfe1; font-size: 14px; font-weight: 700; overflow-wrap: anywhere; }
+.recorded-maps__score b { color: #fff; font-family: 'Barlow Condensed', sans-serif; font-size: 32px; margin-left: 5px; }
+.recorded-maps__score i { color: var(--red); font-size: 20px; font-style: normal; }
+.recorded-maps__lineups { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.recorded-maps__lineup { min-width: 0; }
+.recorded-maps__lineup + .recorded-maps__lineup { border-left: 1px solid var(--line); }
+.recorded-maps__lineup h4 { color: #fff; font-family: 'Barlow Condensed', sans-serif; font-size: 25px; font-style: italic; margin: 0; overflow-wrap: anywhere; padding: 20px 24px 14px; }
+.recorded-maps__table-wrap { overflow-x: auto; }
+.recorded-maps table { border-collapse: collapse; font-size: 13px; width: 100%; }
+.recorded-maps th, .recorded-maps td { border-top: 1px solid var(--line); padding: 12px 10px; text-align: right; white-space: nowrap; }
+.recorded-maps th:first-child { padding-left: 24px; text-align: left; }
+.recorded-maps th:last-child, .recorded-maps td:last-child { padding-right: 24px; }
+.recorded-maps thead th { color: #8d9198; font-size: 9px; font-weight: 700; letter-spacing: 0.12em; }
+.recorded-maps tbody th { color: #fff; font-weight: 700; }
+.recorded-maps tbody td { color: #e1e2e4; font-weight: 600; }
+.recorded-maps tbody tr:nth-child(odd) { background: rgba(255, 255, 255, 0.025); }
+.recorded-maps__card-note { border-top: 1px solid var(--line); color: #8d9198; font-size: 10px; font-weight: 700; letter-spacing: 0.09em; margin: 0; padding: 15px 24px; }
+.recorded-maps__card-note span { color: var(--red); margin: 0 8px; }
+.recorded-maps__deathmatch { background: linear-gradient(110deg, #171116, #111418 55%); border: 1px solid rgba(239, 11, 40, 0.48); display: grid; gap: 30px; grid-template-columns: minmax(220px, 0.55fr) 1fr; margin-top: 16px; padding: 28px 0 0 30px; }
+.recorded-maps__deathmatch h3 { font-size: clamp(48px, 5vw, 70px); }
+.recorded-maps__deathmatch p { color: #b7b9bf; font-size: 14px; line-height: 1.45; max-width: 270px; }
+.recorded-maps__end-note { color: #a8abb1; font-size: 12px; letter-spacing: 0.05em; line-height: 1.4; margin: 22px 0 0; }
+.player-modal__alias { color: var(--red); display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; margin: -10px 0 18px; }
+.player-modal__recorded { border: 1px solid var(--line); margin: 0 0 22px; padding: 16px; }
+.player-modal__recorded > span { color: var(--red); display: block; font-size: 9px; font-weight: 700; letter-spacing: 0.14em; margin-bottom: 12px; }
+.player-modal__recorded > div { border-top: 1px solid var(--line); display: grid; gap: 12px; grid-template-columns: 75px 1fr; padding: 10px 0; }
+.player-modal__recorded b { color: #fff; font-family: 'Barlow Condensed', sans-serif; font-size: 19px; font-style: italic; text-transform: uppercase; }
+.player-modal__recorded small { color: #b7b9bf; font-size: 11px; line-height: 1.45; }
+.player-modal__recorded a { color: #fff; display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 0.12em; margin-top: 5px; text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 4px; }
+.roster-card__alias { background: rgba(8, 9, 11, 0.84); border-left: 2px solid var(--red); bottom: 10px; color: #fff; font-size: 9px; font-weight: 700; left: 14px; letter-spacing: 0.1em; padding: 5px 7px; position: absolute; z-index: 2; }
+@media (max-width: 1100px) { .recorded-maps__lineups { grid-template-columns: 1fr; } .recorded-maps__lineup + .recorded-maps__lineup { border-left: 0; border-top: 1px solid var(--line); } }
+@media (max-width: 780px) { .recorded-maps__intro { display: block; } .recorded-maps__intro > p { margin-top: 28px; } .recorded-maps__card-head { align-items: start; flex-direction: column; } .recorded-maps__score { justify-content: flex-start; text-align: left; } .recorded-maps__deathmatch { display: block; padding: 22px 0 0; } .recorded-maps__deathmatch > div:first-child { padding: 0 20px 15px; } }
+@media (max-width: 430px) { .recorded-maps__card-head { padding: 21px 16px; } .recorded-maps__lineup h4 { padding-left: 16px; } .recorded-maps th, .recorded-maps td { padding: 11px 7px; } .recorded-maps th:first-child { padding-left: 16px; } .recorded-maps th:last-child, .recorded-maps td:last-child { padding-right: 16px; } .recorded-maps__score span { font-size: 12px; } .recorded-maps__score b { font-size: 27px; } .roster-card__alias { bottom: 8px; font-size: 7px; left: 8px; } }
