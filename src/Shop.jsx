@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './shop.css';
 
 const checkoutUrl = 'https://8it.printful.me/product/team-8it-logo-cap';
 const assetRoot = `${import.meta.env.BASE_URL}assets/shop/`;
+const logoUrl = `${import.meta.env.BASE_URL}assets/players-hq/8it-logo.png`;
 const views = [
   { label: 'Front', file: 'team-8it-logo-cap-front.jpg', alt: 'Front view of the black Team 8iT cap with a red embroidered logo' },
   { label: 'Angled', file: 'team-8it-logo-cap-back.jpg', alt: 'Angled view of the 8iT cap showing its embroidered logo and mesh side' },
@@ -10,7 +11,11 @@ const views = [
 ];
 
 function Brand() {
-  return <a className="store-brand" href="./" aria-label="8iT home">8iT<span>OFFICIAL SHOP</span></a>;
+  return <a className="store-brand" href="./" aria-label="8iT home"><img src={logoUrl} alt="" /><span>OFFICIAL SHOP</span></a>;
+}
+
+function HeaderBrand() {
+  return <a className="brand-mark" href="./" aria-label="8iT home"><img src={logoUrl} alt="8iT" /></a>;
 }
 
 function BuyLink({ children, className = '' }) {
@@ -19,13 +24,38 @@ function BuyLink({ children, className = '' }) {
 
 export function Shop() {
   const [viewIndex, setViewIndex] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
   const active = views[viewIndex];
+
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [menuOpen]);
+
   return (
     <div className="store-page">
-      <header className="store-header">
-        <Brand />
-        <nav aria-label="Shop navigation"><a href="./">TEAM SITE</a><a href="#product">THE CAP</a><a href="#details">DETAILS</a></nav>
-        <a className="store-header__cta" href="#product">SHOP THE DROP <i className="fa-solid fa-arrow-down" aria-hidden="true" /></a>
+      <header className="site-header is-scrolled store-site-header">
+        <HeaderBrand />
+        <nav id="shop-primary-navigation" className={`site-nav ${menuOpen ? 'is-open' : ''}`} aria-label="Primary navigation">
+          <a href="./#team" onClick={() => setMenuOpen(false)}>TEAM</a>
+          <a href="./stats.html" onClick={() => setMenuOpen(false)}>STATS</a>
+          <a href="./#matches" onClick={() => setMenuOpen(false)}>MATCHES</a>
+          <a href="./#hype" onClick={() => setMenuOpen(false)}>HYPE REEL</a>
+          <a href="./#broadcast" onClick={() => setMenuOpen(false)}>BROADCAST</a>
+          <a href="./#intel" onClick={() => setMenuOpen(false)}>INTEL</a>
+          <a href="./#community" onClick={() => setMenuOpen(false)}>COMMUNITY</a>
+          <a href="./#tickets" onClick={() => setMenuOpen(false)}>TICKETS</a>
+          <a href="#product" aria-current="page" onClick={() => setMenuOpen(false)}>SHOP</a>
+        </nav>
+        <div className="header-actions">
+          <a className="header-tickets" href="./#tickets">GET TICKETS <i className="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" /></a>
+          <button className={`menu-toggle ${menuOpen ? 'is-open' : ''}`} type="button" aria-expanded={menuOpen} aria-controls="shop-primary-navigation" aria-label={menuOpen ? 'Close menu' : 'Open menu'} onClick={() => setMenuOpen((open) => !open)}><span /><span /></button>
+        </div>
+        <div className="header-motto" aria-label="Play, improve, dominate">PLAY <span>/</span> IMPROVE <span>/</span> DOMINATE</div>
       </header>
       <main>
         <section className="store-hero" aria-labelledby="store-hero-title">
@@ -54,7 +84,7 @@ export function Shop() {
           <div className="store-details__intro"><p className="store-eyebrow">THE DETAILS</p><h2 id="store-details-title">BUILT FOR<br /><em>THE ROOM.</em></h2><p>The official team cap makes the 8iT mark unmistakable. A practical fit for long tournament days and the days after.</p></div>
           <div className="store-details__grid"><article><span>01 / STRUCTURE</span><h3>SIX-PANEL FIT</h3><p>Structured, mid-profile six-panel construction with a 3.5″ crown.</p></article><article><span>02 / COMFORT</span><h3>MESH BACK</h3><p>26% cotton and 74% polyester construction with breathable mesh panels.</p></article><article><span>03 / FINISH</span><h3>ADJUSTABLE</h3><p>Permacurv visor and plastic adjustable closure for a personalized fit.</p></article></div>
         </section>
-        <section className="store-lastcall" aria-label="Shop official 8iT cap"><p>READY TO REP THE SQUAD?</p><h2>PUT 8iT<br />ON THE MAP.</h2><BuyLink>GET THE OFFICIAL CAP</BuyLink><small>Checkout opens on Printful in a new tab.</small></section>
+        <section className="store-lastcall" aria-label="Shop official 8iT cap"><img className="store-lastcall__logo" src={logoUrl} alt="" loading="lazy" /><p>READY TO REP THE SQUAD?</p><h2>PUT 8iT<br />ON THE MAP.</h2><BuyLink>GET THE OFFICIAL CAP</BuyLink><small>Checkout opens on Printful in a new tab.</small></section>
       </main>
       <footer className="store-footer"><Brand /><p>8iT / COLORADO / PLAY · IMPROVE · DOMINATE</p><div><a href="./">BACK TO TEAM SITE</a><a href={checkoutUrl} target="_blank" rel="noopener noreferrer">PRINTFUL PRODUCT <i className="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" /></a></div></footer>
     </div>
