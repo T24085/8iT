@@ -1,9 +1,19 @@
 import { useEffect, useState } from 'react';
 import './shop.css';
+import './shop-collection.css';
 
 const checkoutUrl = 'https://8it.printful.me/product/team-8it-logo-cap';
 const assetRoot = `${import.meta.env.BASE_URL}assets/shop/`;
 const logoUrl = `${import.meta.env.BASE_URL}assets/players-hq/8it-logo.png`;
+const squadMerch = [
+  { name: 'HellaTurtlz', image: 'hoodie-hellaturlz.png', url: 'https://8it.printful.me/product/8it-hellaturtlz-unisex-eco-raglan-hoodie' },
+  { name: 'Ghosted', image: 'hoodie-ghosted.png', url: 'https://8it.printful.me/product/8it-ghosted-unisex-eco-raglan-hoodie' },
+  { name: 'Zixxy', image: 'hoodie-zixxy.png', url: 'https://8it.printful.me/product/8it-zixxy-unisex-eco-raglan-hoodie' },
+  { name: 'Titan101', image: 'hoodie-titan101.png', url: 'https://8it.printful.me/product/8it-titan101-unisex-eco-raglan-hoodie' },
+  { name: 'Ghettobird', image: 'hoodie-ghettobird.png', url: 'https://8it.printful.me/product/8it-ghettobird-unisex-eco-raglan-hoodie' },
+  { name: 'HanoSandy', image: 'hoodie-hanosandy.png', url: 'https://8it.printful.me/product/unisex-eco-raglan-hoodie-6aba7af0199e7' },
+  { name: 'PandaMonium', image: 'hoodie-pandamonium.png', url: 'https://8it.printful.me/product/unisex-eco-raglan-hoodie' },
+];
 const views = [
   { label: 'Front', file: 'team-8it-logo-cap-front.jpg', alt: 'Front view of the black Team 8iT cap with a red embroidered logo' },
   { label: 'Angled', file: 'team-8it-logo-cap-back.jpg', alt: 'Angled view of the 8iT cap showing its embroidered logo and mesh side' },
@@ -49,7 +59,7 @@ export function Shop() {
           <a href="./#intel" onClick={() => setMenuOpen(false)}>INTEL</a>
           <a href="./#community" onClick={() => setMenuOpen(false)}>COMMUNITY</a>
           <a href="./#tickets" onClick={() => setMenuOpen(false)}>TICKETS</a>
-          <a href="#product" aria-current="page" onClick={() => setMenuOpen(false)}>SHOP</a>
+          <a href="#collection" aria-current="page" onClick={() => setMenuOpen(false)}>SHOP</a>
         </nav>
         <div className="header-actions">
           <a className="header-tickets" href="./#tickets">GET TICKETS <i className="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" /></a>
@@ -59,12 +69,28 @@ export function Shop() {
       </header>
       <main>
         <section className="store-hero" aria-labelledby="store-hero-title">
-          <div className="store-hero__copy"><p className="store-eyebrow">8iT FIELD EQUIPMENT / 001</p><h1 id="store-hero-title">REP THE<br /><em>TEAM.</em></h1><p className="store-hero__lead">The official 8iT logo cap. Built for the LAN floor, the road home, and every round in between.</p><a className="store-button" href="#product">EXPLORE THE CAP <i className="fa-solid fa-arrow-down" aria-hidden="true" /></a><p className="store-hero__index">01 / OFFICIAL MERCH DROP</p></div>
+          <div className="store-hero__copy"><p className="store-eyebrow">8iT FIELD EQUIPMENT / OFFICIAL</p><h1 id="store-hero-title">REP THE<br /><em>TEAM.</em></h1><p className="store-hero__lead">Official 8iT gear for the LAN floor, the road home, and every round in between.</p><a className="store-button" href="#collection">SHOP THE SQUAD DROP <i className="fa-solid fa-arrow-down" aria-hidden="true" /></a><p className="store-hero__index">CAPS + SQUAD HOODIES / OFFICIAL MERCH</p></div>
           <div className="store-hero__visual"><span className="store-hero__outline" aria-hidden="true">8iT</span><img src={`${assetRoot}${views[0].file}`} alt={views[0].alt} fetchPriority="high" /><span className="store-hero__tag">TEAM 8iT<br />LOGO CAP</span></div>
         </section>
         <div className="store-ticker" aria-label="Shop highlights"><span>OFFICIAL TEAM GEAR</span><span>EMBROIDERED 8iT MARK</span><span>ONE SIZE / ADJUSTABLE</span><span>BLACK + RED</span></div>
+        <section className="store-collection" id="collection" aria-labelledby="store-collection-title">
+          <div className="store-section-heading"><div><p className="store-eyebrow">THE SQUAD DROP / 007</p><h2 id="store-collection-title">GEAR UP.<br /><em>REP 8iT.</em></h2></div><p>Shop the official roster hoodies and team cap. Pick your size and complete checkout securely through the 8iT Printful store.</p></div>
+          <div className="store-collection__grid">
+            {squadMerch.map((item, index) => (
+              <article className="store-merch-card" key={item.name}>
+                <a className="store-merch-card__image" href={item.url} target="_blank" rel="noopener noreferrer" aria-label={`View ${item.name} hoodie on the official 8iT store`}>
+                  <img src={`${assetRoot}catalog/${item.image}`} alt={`Black 8iT logo eco raglan hoodie, ${item.name} edition`} loading="lazy" />
+                  <span>0{index + 1} / SQUAD</span>
+                </a>
+                <div className="store-merch-card__details"><div><p>8iT / SQUAD HOODIE</p><h3>{item.name}</h3></div><strong>FROM $55.50</strong></div>
+                <a className="store-merch-card__link" href={item.url} target="_blank" rel="noopener noreferrer">CHOOSE SIZE + SHOP <i className="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" /></a>
+              </article>
+            ))}
+          </div>
+          <p className="store-collection__note">Hoodie prices start at $55.50; final price may vary by size. Printful handles size selection, shipping, taxes, and payment at checkout.</p>
+        </section>
         <section className="store-product" id="product" aria-labelledby="store-product-title">
-          <div className="store-section-heading"><div><p className="store-eyebrow">THE FIRST DROP</p><h2 id="store-product-title">TEAM 8iT<br /><em>LOGO CAP.</em></h2></div><p>One real product. No mock inventory or mystery merch. Take a closer look before you buy.</p></div>
+          <div className="store-section-heading"><div><p className="store-eyebrow">THE TEAM CAP / 001</p><h2 id="store-product-title">TEAM 8iT<br /><em>LOGO CAP.</em></h2></div><p>The official embroidered 8iT cap. See all three product views, then choose quantity and check out through our Printful store.</p></div>
           <div className="store-product__layout">
             <div className="store-gallery">
               <div className="store-gallery__stage"><img src={`${assetRoot}${active.file}`} alt={active.alt} /><span>{String(viewIndex + 1).padStart(2, '0')} / {String(views.length).padStart(2, '0')}</span></div>
