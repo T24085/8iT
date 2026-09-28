@@ -7,7 +7,8 @@ test('official scoreboards cover only two maps and five 8iT players', () => {
   const rows = getPlayerMapRows('official');
   assert.equal(rows.length, 10);
   assert.deepEqual([...new Set(rows.map(({ map }) => map))], ['Dust II', 'Inferno']);
-  assert.equal(rows.find(({ map, player }) => map === 'Dust II' && player === 'BitchStewie').kills, 9);
+  assert.equal(rows.find(({ map, player }) => map === 'Dust II' && player === 'ghosted').kills, 9);
+  assert.equal(rows.some(({ player }) => player === 'BitchStewie'), false);
   const summaries = getPlayerSummaries('official');
   assert.equal(summaries.length, 5);
   assert.deepEqual(summaries.find(({ player }) => player === 'PandaMonium'), {
@@ -20,7 +21,7 @@ test('official scoreboards cover only two maps and five 8iT players', () => {
 
 test('friendly stats and scores stay distinct from official games', () => {
   assert.equal(getPlayerMapRows('friendly').length, 10);
-  const zixxy = getPlayerSummaries('friendly').find(({ player }) => player === 'BitchStewie');
+  const zixxy = getPlayerSummaries('friendly').find(({ player }) => player === 'ghosted');
   assert.equal(zixxy.score, 140);
   assert.deepEqual([zixxy.kills, zixxy.deaths, zixxy.assists], [30, 29, 12]);
   assert.deepEqual(getMapScorelines('official').map(({ map, us, them }) => [map, us, them]), [

@@ -21,7 +21,7 @@ export const defaultRoster = [
   ['ghettobird', 'Sniper', 'PLAYER POV', 'ghettobirdz'],
   ['ghosted', 'Entry Fragger', 'LOCKED IN', null],
   ['Hanosandy', 'AWPer', 'PLAYER POV', 'FragWatch'],
-  ['hellaturlz', 'Support', 'LOCKED IN', null],
+  ['Hellaturtlz', 'Support', 'LOCKED IN', null],
   ['Titan101', 'Rifler', 'PLAYER POV', 'titan101'],
 ];
 
@@ -251,7 +251,9 @@ export function readAdminData() {
       ...saved,
       event: { ...emptyAdminData.event, ...(saved.event || {}) },
       liveMatch: { ...emptyAdminData.liveMatch, ...(saved.liveMatch || {}) },
-      roster: Array.isArray(saved.roster) ? saved.roster : emptyAdminData.roster,
+      roster: Array.isArray(saved.roster)
+        ? saved.roster.map((player) => player[0]?.toLowerCase() === 'hellaturlz' ? ['Hellaturtlz', ...player.slice(1)] : player)
+        : emptyAdminData.roster,
       schedule: Array.isArray(saved.schedule) ? saved.schedule : emptyAdminData.schedule,
       swiss: hydrateSwiss(saved.swiss),
       rematch: hydrateRematch(saved.rematch),

@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { SiteHeader } from './SiteHeader.jsx';
 import './shop.css';
 import './shop-collection.css';
 
@@ -24,10 +25,6 @@ function Brand() {
   return <a className="store-brand" href="./" aria-label="8iT home"><img src={logoUrl} alt="" /><span>OFFICIAL SHOP</span></a>;
 }
 
-function HeaderBrand() {
-  return <a className="brand-mark" href="./" aria-label="8iT home"><img src={logoUrl} alt="8iT" /></a>;
-}
-
 function BuyLink({ children, className = '' }) {
   return <a className={`store-button ${className}`} href={checkoutUrl} target="_blank" rel="noopener noreferrer">{children} <i className="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" /></a>;
 }
@@ -35,39 +32,11 @@ function BuyLink({ children, className = '' }) {
 export function Shop() {
   const [viewIndex, setViewIndex] = useState(0);
   const [merchViews, setMerchViews] = useState({});
-  const [menuOpen, setMenuOpen] = useState(false);
   const active = views[viewIndex];
-
-  useEffect(() => {
-    if (!menuOpen) return undefined;
-    const closeOnEscape = (event) => {
-      if (event.key === 'Escape') setMenuOpen(false);
-    };
-    window.addEventListener('keydown', closeOnEscape);
-    return () => window.removeEventListener('keydown', closeOnEscape);
-  }, [menuOpen]);
 
   return (
     <div className="store-page">
-      <header className="site-header is-scrolled store-site-header">
-        <HeaderBrand />
-        <nav id="shop-primary-navigation" className={`site-nav ${menuOpen ? 'is-open' : ''}`} aria-label="Primary navigation">
-          <a href="./#team" onClick={() => setMenuOpen(false)}>TEAM</a>
-          <a href="./stats.html" onClick={() => setMenuOpen(false)}>STATS</a>
-          <a href="./#matches" onClick={() => setMenuOpen(false)}>MATCHES</a>
-          <a href="./#hype" onClick={() => setMenuOpen(false)}>HYPE REEL</a>
-          <a href="./#broadcast" onClick={() => setMenuOpen(false)}>BROADCAST</a>
-          <a href="./#intel" onClick={() => setMenuOpen(false)}>INTEL</a>
-          <a href="./#community" onClick={() => setMenuOpen(false)}>COMMUNITY</a>
-          <a href="./#tickets" onClick={() => setMenuOpen(false)}>TICKETS</a>
-          <a href="#collection" aria-current="page" onClick={() => setMenuOpen(false)}>SHOP</a>
-        </nav>
-        <div className="header-actions">
-          <a className="header-tickets" href="./#tickets">GET TICKETS <i className="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" /></a>
-          <button className={`menu-toggle ${menuOpen ? 'is-open' : ''}`} type="button" aria-expanded={menuOpen} aria-controls="shop-primary-navigation" aria-label={menuOpen ? 'Close menu' : 'Open menu'} onClick={() => setMenuOpen((open) => !open)}><span /><span /></button>
-        </div>
-        <div className="header-motto" aria-label="Play, improve, dominate">PLAY <span>/</span> IMPROVE <span>/</span> DOMINATE</div>
-      </header>
+      <SiteHeader page="shop" />
       <main>
         <section className="store-hero" aria-labelledby="store-hero-title">
           <div className="store-hero__copy"><p className="store-eyebrow">8iT FIELD EQUIPMENT / OFFICIAL</p><h1 id="store-hero-title">REP THE<br /><em>TEAM.</em></h1><p className="store-hero__lead">Official 8iT gear for the LAN floor, the road home, and every round in between.</p><a className="store-button" href="#collection">SHOP THE SQUAD DROP <i className="fa-solid fa-arrow-down" aria-hidden="true" /></a><p className="store-hero__index">CAPS + SQUAD HOODIES / OFFICIAL MERCH</p></div>

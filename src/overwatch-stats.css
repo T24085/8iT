@@ -1,0 +1,49 @@
+.overwatch-stats { background: radial-gradient(circle at 88% 8%, rgba(43, 180, 211, .13), transparent 38%), #0a0d11; border-block: 1px solid var(--line); scroll-margin-top: 70px; }
+.overwatch-stats__intro { align-items: end; display: grid; gap: 32px; grid-template-columns: minmax(0, 1fr) minmax(280px, .72fr); margin-bottom: 40px; }
+.overwatch-stats__intro h2 { font-size: clamp(64px, 8vw, 120px); line-height: .84; margin: 0; }
+.overwatch-stats__intro h2 em { color: #70dff2; font-style: normal; }
+.overwatch-stats__intro > p { color: #bdc5cb; font-size: 15px; line-height: 1.55; margin: 0; }
+.overwatch-stats__scores { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.overwatch-stats__score { align-items: end; background: linear-gradient(125deg, rgba(16, 42, 50, .9), #101418 62%); border: 1px solid rgba(112, 223, 242, .28); border-top: 3px solid #70dff2; display: flex; gap: 16px; justify-content: space-between; min-width: 0; padding: 25px 28px; }
+.overwatch-stats__score > div:first-child > span, .overwatch-stats__player-head > div:first-child > span { color: #70dff2; font-size: 9px; font-weight: 800; letter-spacing: .16em; }
+.overwatch-stats__score h3 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(42px, 5vw, 70px); font-style: italic; line-height: .9; margin: 10px 0 8px; text-transform: uppercase; }
+.overwatch-stats__score small, .overwatch-stats__player-head small { color: #9faeb5; display: block; font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.overwatch-stats__scoreline { display: grid; justify-items: end; text-align: right; }
+.overwatch-stats__scoreline span { color: #b7c4ca; font-size: 9px; font-weight: 800; letter-spacing: .14em; }
+.overwatch-stats__scoreline strong { color: #fff; font-family: 'Barlow Condensed', sans-serif; font-size: clamp(42px, 5vw, 62px); line-height: 1; white-space: nowrap; }
+.overwatch-stats__scoreline i { color: #70dff2; font-size: .65em; font-style: normal; }
+.overwatch-stats__subhead { align-items: baseline; display: flex; gap: 18px; justify-content: space-between; margin: 45px 0 20px; }
+.overwatch-stats__subhead h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 36px; font-style: italic; margin: 0; text-transform: uppercase; }
+.overwatch-stats__subhead span { color: #9faeb5; font-size: 10px; font-weight: 700; letter-spacing: .1em; }
+.overwatch-stats__players { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.overwatch-stats__player { background: #11171b; border: 1px solid var(--line); min-width: 0; }
+.overwatch-stats__player-head { align-items: start; display: flex; gap: 15px; justify-content: space-between; min-height: 122px; padding: 22px 24px; }
+.overwatch-stats__player-head h4 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(34px, 3.5vw, 48px); font-style: italic; line-height: .95; margin: 10px 0 6px; overflow-wrap: anywhere; text-transform: uppercase; }
+.overwatch-stats__player-head > div:last-child { color: #70dff2; display: grid; flex: 0 0 auto; justify-items: end; }
+.overwatch-stats__player-head strong { font-family: 'Barlow Condensed', sans-serif; font-size: 48px; line-height: .9; }
+.overwatch-stats__player-head > div:last-child span { font-size: 8px; font-weight: 800; letter-spacing: .12em; }
+.overwatch-stats__table-wrap { overflow-x: auto; }
+.overwatch-stats table { border-collapse: collapse; font-size: 12px; min-width: 525px; width: 100%; }
+.overwatch-stats th, .overwatch-stats td { border-top: 1px solid var(--line); padding: 13px 12px; text-align: right; white-space: nowrap; }
+.overwatch-stats th:first-child { padding-left: 24px; text-align: left; }
+.overwatch-stats td:last-child, .overwatch-stats th:last-child { padding-right: 24px; }
+.overwatch-stats thead th { color: #8fa1aa; font-size: 9px; font-weight: 800; letter-spacing: .12em; }
+.overwatch-stats tbody th { color: #fff; font-weight: 800; }
+.overwatch-stats tbody td { color: #d9e3e7; font-weight: 700; }
+.overwatch-stats tbody tr:nth-child(odd) { background: rgba(255, 255, 255, .025); }
+.overwatch-stats__profile-link { background: transparent; border: 0; border-top: 1px solid var(--line); color: #70dff2; cursor: pointer; display: block; font-size: 9px; font-weight: 800; letter-spacing: .12em; padding: 14px 24px; text-align: left; width: 100%; }
+.overwatch-stats__profile-link:hover, .overwatch-stats__note a:hover { color: #fff; }
+.overwatch-stats__profile-link:focus-visible { outline: 2px solid #70dff2; outline-offset: -3px; }
+.overwatch-stats__note { color: #a5b2b9; font-size: 12px; line-height: 1.55; margin: 24px 0 0; }
+.overwatch-stats__note a { color: #70dff2; font-weight: 800; white-space: nowrap; }
+.player-modal__overwatch { border: 1px solid rgba(112, 223, 242, .35); margin: 0 0 22px; padding: 16px; }
+.player-modal__overwatch > span { color: #70dff2; display: block; font-size: 9px; font-weight: 800; letter-spacing: .14em; margin-bottom: 12px; }
+.player-modal__overwatch > div { border-top: 1px solid var(--line); display: grid; gap: 10px; grid-template-columns: 75px 1fr; padding: 10px 0; }
+.player-modal__overwatch b { color: #fff; font-family: 'Barlow Condensed', sans-serif; font-size: 19px; font-style: italic; text-transform: uppercase; }
+.player-modal__overwatch small { color: #b7c3c8; font-size: 11px; line-height: 1.5; }
+.player-modal__overwatch a { color: #70dff2; display: inline-block; font-size: 9px; font-weight: 800; letter-spacing: .12em; margin-top: 5px; text-decoration: underline; text-underline-offset: 4px; }
+.roster-card__stats > .roster-card__ow { border-top: 1px solid rgba(112, 223, 242, .4); margin-top: 4px; padding-top: 5px; }
+.roster-card__stats > .roster-card__ow span { color: #70dff2; }
+@media (max-width: 1100px) { .overwatch-stats__players { grid-template-columns: 1fr; } }
+@media (max-width: 780px) { .overwatch-stats__intro { display: block; } .overwatch-stats__intro > p { margin-top: 25px; } .overwatch-stats__scores { grid-template-columns: 1fr; } .overwatch-stats__subhead { align-items: start; flex-direction: column; gap: 4px; } }
+@media (max-width: 460px) { .overwatch-stats__score { padding: 21px 16px; } .overwatch-stats__player-head { padding: 20px 16px; } .overwatch-stats__player-head strong { font-size: 42px; } .overwatch-stats th:first-child { padding-left: 16px; } .overwatch-stats td:last-child, .overwatch-stats th:last-child { padding-right: 16px; } }

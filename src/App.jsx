@@ -5,20 +5,11 @@ import { RematchStats } from './RematchStatsPanel';
 import { getRematchPlayer, getRematchTotals, rematchMaps } from './rematchStats';
 import { RecordedMatchStats } from './RecordedMatchStatsPanel';
 import { getRecordedPlayerStats, getRecordedPlayerTotals } from './recordedMatchStats';
+import { OverwatchStats, overwatchLine } from './OverwatchStatsPanel';
+import { getOverwatchPlayerMaps, getOverwatchPlayerTotals } from './overwatchStats';
 import { TournamentPlacements } from './TournamentPlacements';
 import { OfficialBracketPanel } from './OfficialBracketPanel';
-
-const navItems = [
-  ['TEAM', '#team'],
-  ['STATS', './stats.html'],
-  ['MATCHES', '#matches'],
-  ['HYPE REEL', '#hype'],
-  ['BROADCAST', '#broadcast'],
-  ['INTEL', '#intel'],
-  ['COMMUNITY', '#community'],
-  ['TICKETS', '#tickets'],
-  ['SHOP', './shop.html'],
-];
+import { SiteHeader } from './SiteHeader.jsx';
 
 const channels = [
   { platform: 'Twitch', handle: 'pandoracast', type: 'twitch', role: 'PandaMonium // IGL', description: 'Team POV, match comms, and the Pandamonium broadcast desk.', url: 'https://www.twitch.tv/pandoracast', icon: 'fa-twitch', tone: 'red' },
@@ -51,13 +42,13 @@ const playerProfiles = {
   ghettobird: { tagline: 'THE HUNTER', bio: 'Long sightlines, short patience. The angle is already taken before you see it.', stats: [['ROLE', 'SNIPER'], ['SIGNAL', 'PLAYER POV'], ['MODE', 'PATIENCE']] },
   ghosted: { tagline: 'THE ENTRY', bio: 'First through the door, last to doubt the call. Pressure is the opening move.', stats: [['ROLE', 'ENTRY FRAGGER'], ['SIGNAL', 'LOCKED IN'], ['MODE', 'FIRST CONTACT']] },
   Hanosandy: { tagline: 'THE WATCHER', bio: 'Every pixel matters. Turns the smallest mistake into a round-ending decision.', stats: [['ROLE', 'AWPer'], ['SIGNAL', 'LOCKED IN'], ['MODE', 'READ THE ROOM']] },
-  hellaturlz: { tagline: 'THE GLUE', bio: 'The piece that makes the whole machine run. Support is not a background role.', stats: [['ROLE', 'SUPPORT'], ['SIGNAL', 'LOCKED IN'], ['MODE', 'MAKE SPACE']] },
+  Hellaturtlz: { tagline: 'THE GLUE', bio: 'The piece that makes the whole machine run. Support is not a background role.', stats: [['ROLE', 'SUPPORT'], ['SIGNAL', 'LOCKED IN'], ['MODE', 'MAKE SPACE']] },
   Titan101: { tagline: 'THE RIFLE', bio: 'Clean crosshair. Heavy footsteps. When the site needs a closer, Titan answers.', stats: [['ROLE', 'RIFLER'], ['SIGNAL', 'PLAYER POV'], ['MODE', 'CLOSE IT OUT']] },
 };
 
 const playerMedia = {
   Titan101: { portrait: './assets/players-hq/titan101.png', banner: './assets/players-hq/titan101-wordmark.png' },
-  hellaturlz: { portrait: './assets/players-hq/hello-turtlz.png', banner: './assets/players-hq/hello-turtlz-wordmark.png' },
+  Hellaturtlz: { portrait: './assets/players-hq/hello-turtlz.png', banner: './assets/players-hq/hello-turtlz-wordmark.png' },
   ghosted: { portrait: './assets/players-hq/ghosted.png', banner: './assets/players-hq/ghosted-wordmark.png' },
   ghettobird: { portrait: './assets/players-hq/ghettobird.png', banner: './assets/players-hq/ghettobird-wordmark.png' },
   BitchStewie: { portrait: './assets/players-hq/bitch-stewie.png', banner: './assets/players-hq/bitch-stewie-wordmark.png' },
@@ -93,11 +84,12 @@ function PlayerSpotlight({ player, onClose }) {
   const media = playerMedia[player.name] || playerMedia.PandaMonium;
   const rematchStats = getRematchPlayer(player.name);
   const recordedStats = getRecordedPlayerStats(player.name);
+  const overwatchStats = getOverwatchPlayerMaps(player.name);
   const stream = channels.find((channel) => channel.handle.toLowerCase() === player.channel?.toLowerCase());
   const streamUrl = stream?.type === 'twitch'
     ? `https://player.twitch.tv/?channel=${stream.handle}&parent=${window.location.hostname || 'localhost'}&autoplay=false`
     : stream ? `https://www.youtube-nocookie.com/embed/live_stream?channel=${stream.channelId}&rel=0` : null;
-  return <div className="player-modal" role="presentation" onClick={onClose}><div className="player-modal__inner" role="dialog" aria-modal="true" aria-labelledby="player-modal-title" onClick={(event) => event.stopPropagation()}><button className="clip-modal__close" type="button" onClick={onClose} aria-label="Close player profile"><i className="fa-solid fa-xmark" aria-hidden="true" /></button><div className="player-modal__visual"><img src={media.portrait} alt={`${player.name} player portrait`} /><small>8iT // PLAYER FILE</small></div><div className="player-modal__copy">{media.banner && <div className="player-modal__banner" style={{ backgroundImage: `url("${media.banner}")` }} aria-hidden="true" />}<p className="eyebrow eyebrow--light"><span className="slash" />{profile.tagline}</p><h2 id="player-modal-title">{player.name}</h2>{player.name === 'BitchStewie' && <span className="player-modal__alias">ALSO KNOWN AS ZIXXY</span>}<p>{profile.bio}</p><div className="player-modal__stats">{profile.stats.map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}</div>{recordedStats.length > 0 && <div className="player-modal__recorded"><span>OFFICIAL MATCH RECORDING // FINAL SCOREBOARDS</span>{recordedStats.map(({ map, stats }) => <div key={map}><b>{map}</b><small>{stats.kills} / {stats.deaths} / {stats.assists} K/D/A <span aria-hidden="true">//</span> {stats.hs}% HS <span aria-hidden="true">//</span> {stats.damage.toLocaleString()} DMG</small></div>)}<a href="#recorded-maps" onClick={onClose}>VIEW FULL SCOREBOARDS ↗</a></div>}{rematchStats && <div className="player-modal__rematch"><span>FRIENDLY REMATCH // POST-MAP CARD STATS</span>{rematchMaps.map((map) => { const stats = rematchStats.maps[map]; return <div key={map}><b>{map}</b><small>SCORE {stats.score} <span aria-hidden="true">//</span> {stats.kills} / {stats.deaths} / {stats.assists} K/D/A <span aria-hidden="true">//</span> {stats.hs}% HS</small></div>; })}<a href="#rematch-stats" onClick={onClose}>VIEW ALL REMATCH STATS ↗</a></div>}{streamUrl && <div className="player-modal__stream"><div><span><i /> PLAYER STREAM</span><small>{stream.platform} // {stream.handle}</small></div><iframe src={streamUrl} title={`${stream.handle} ${stream.platform} player stream`} allow="autoplay; fullscreen; encrypted-media" allowFullScreen /></div>}</div></div></div>;
+  return <div className="player-modal" role="presentation" onClick={onClose}><div className="player-modal__inner" role="dialog" aria-modal="true" aria-labelledby="player-modal-title" onClick={(event) => event.stopPropagation()}><button className="clip-modal__close" type="button" onClick={onClose} aria-label="Close player profile"><i className="fa-solid fa-xmark" aria-hidden="true" /></button><div className="player-modal__visual"><img src={media.portrait} alt={`${player.name} player portrait`} /><small>8iT // PLAYER FILE</small></div><div className="player-modal__copy">{media.banner && <div className="player-modal__banner" style={{ backgroundImage: `url("${media.banner}")` }} aria-hidden="true" />}<p className="eyebrow eyebrow--light"><span className="slash" />{profile.tagline}</p><h2 id="player-modal-title">{player.name}</h2>{player.name === 'ghosted' && <span className="player-modal__alias">ALSO KNOWN AS ZIXXY</span>}<p>{profile.bio}</p><div className="player-modal__stats">{profile.stats.map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}</div>{recordedStats.length > 0 && <div className="player-modal__recorded"><span>OFFICIAL MATCH RECORDING // FINAL SCOREBOARDS</span>{recordedStats.map(({ map, stats }) => <div key={map}><b>{map}</b><small>{stats.kills} / {stats.deaths} / {stats.assists} K/D/A <span aria-hidden="true">//</span> {stats.hs}% HS <span aria-hidden="true">//</span> {stats.damage.toLocaleString()} DMG</small></div>)}<a href="#recorded-maps" onClick={onClose}>VIEW FULL SCOREBOARDS ↗</a></div>}{overwatchStats.length > 0 && <div className="player-modal__overwatch"><span>OVERWATCH 2 // {overwatchStats[0].stats.name.toUpperCase()} IN-GAME</span>{overwatchStats.map(({ map, stats }) => <div key={map}><b>{map}</b><small>{overwatchLine(stats)} E/A/D <span aria-hidden="true">//</span> {stats.damage.toLocaleString()} DMG <span aria-hidden="true">//</span> {stats.healing.toLocaleString()} HEAL <span aria-hidden="true">//</span> {stats.mitigation.toLocaleString()} MIT</small></div>)}<a href="#overwatch-stats" onClick={onClose}>VIEW OVERWATCH TEAM STATS &rarr;</a></div>}{rematchStats && <div className="player-modal__rematch"><span>FRIENDLY REMATCH // POST-MAP CARD STATS</span>{rematchMaps.map((map) => { const stats = rematchStats.maps[map]; return <div key={map}><b>{map}</b><small>SCORE {stats.score} <span aria-hidden="true">//</span> {stats.kills} / {stats.deaths} / {stats.assists} K/D/A <span aria-hidden="true">//</span> {stats.hs}% HS</small></div>; })}<a href="#rematch-stats" onClick={onClose}>VIEW ALL REMATCH STATS ↗</a></div>}{streamUrl && <div className="player-modal__stream"><div><span><i /> PLAYER STREAM</span><small>{stream.platform} // {stream.handle}</small></div><iframe src={streamUrl} title={`${stream.handle} ${stream.platform} player stream`} allow="autoplay; fullscreen; encrypted-media" allowFullScreen /></div>}</div></div></div>;
 }
 
 function LiveMatchCenter({ bracketData, cs2Edited, cs2TeamName, killFeedData = killFeed, liveMatchData = defaultLiveMatch, onPulse }) {
@@ -194,8 +186,6 @@ function ClipCard({ clip, onPlay }) {
 }
 
 export function App() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [activeClip, setActiveClip] = useState(null);
   const [activePlayer, setActivePlayer] = useState(null);
   const [easterEgg, setEasterEgg] = useState(false);
@@ -223,12 +213,6 @@ export function App() {
   };
 
   const toggleSound = () => { const next = !soundEnabled; setSoundEnabled(next); if (next) emitPulse(78, 0.24, true); };
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 32);
-    onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
 
   useEffect(() => {
     const onKeyDown = (eventKey) => { if (eventKey.key === 'Escape') { setActiveClip(null); setActivePlayer(null); setEasterEgg(false); } };
@@ -297,22 +281,18 @@ export function App() {
 
   return (
     <>
-      <header className={`site-header ${scrolled ? 'is-scrolled' : ''}`}>
-        <BrandMark />
-        <nav id="primary-navigation" className={`site-nav ${menuOpen ? 'is-open' : ''}`} aria-label="Primary navigation">{navItems.map(([label, href]) => <a href={href} key={href} onClick={() => setMenuOpen(false)}>{label}</a>)}</nav>
-        <div className="header-actions"><button className={`sound-toggle ${soundEnabled ? 'is-on' : ''}`} type="button" onClick={toggleSound} aria-pressed={soundEnabled} aria-label={soundEnabled ? 'Mute site sound' : 'Enable site sound'}><i className={`fa-solid ${soundEnabled ? 'fa-volume-high' : 'fa-volume-xmark'}`} aria-hidden="true" /><span>{soundEnabled ? 'SOUND ON' : 'SOUND OFF'}</span></button><a className="header-tickets" href={currentEvent.ticketsUrl} target="_blank" rel="noreferrer">GET TICKETS <ArrowIcon /></a><button className={`menu-toggle ${menuOpen ? 'is-open' : ''}`} type="button" aria-expanded={menuOpen} aria-controls="primary-navigation" aria-label={menuOpen ? 'Close menu' : 'Open menu'} onClick={() => setMenuOpen((open) => !open)}><span /><span /></button></div>
-        <div className="header-motto" aria-label="Play, improve, dominate">PLAY <span>/</span> IMPROVE <span>/</span> DOMINATE</div>
-      </header>
+      <SiteHeader ticketsUrl={currentEvent.ticketsUrl} soundEnabled={soundEnabled} onToggleSound={toggleSound} />
 
       <main>
         <section id="home" className="hero" aria-labelledby="hero-title" style={{ backgroundImage: 'url("./assets/banners/hero-a-site.png")' }}><div className="hero__veil" /><div className="hero__scanline" /><div className="hero__content" data-reveal="hero-copy"><SectionLabel light>EVERLAN // COLORADO</SectionLabel><h1 id="hero-title">NO SAFE<br /><em>ROUNDS.</em></h1><p className="hero__copy">8iT is taking the room at LANFest Colorado. Four days. One squad. Every angle live.</p><div className="hero__actions"><a className="button button--primary" href={currentEvent.ticketsUrl} target="_blank" rel="noreferrer">GET EVENT PASSES <ArrowIcon /></a><a className="button button--ghost" href="#broadcast">WATCH THE FEED <i className="fa-solid fa-play" aria-hidden="true" /></a></div></div><div className="hero__event-card" data-reveal="hero-card" style={{ '--reveal-delay': '180ms' }}><p className="hero__event-kicker">{currentEvent.series}</p><strong>{currentEvent.shortDates}</strong><span>{currentEvent.location}</span><div className="hero__countdown"><small>EVENT T-MINUS</small><Countdown target={currentEvent.startAt} compact /></div><a href="#tickets">ENTER THE ROOM <ArrowIcon /></a></div><div className="hero__side-note">01 <span /> 8iT / NEW DAWN</div></section>
 
         <section className="event-strip" aria-label="Event facts" data-reveal="strip"><div><span className="event-strip__number">04</span><span>FULL DAYS<br /><b>OF GAMING</b></span></div><div><span className="event-strip__number">330</span><span>SEATS<br /><b>IN THE ROOM</b></span></div><div><span className="event-strip__number">20</span><span>YEARS<br /><b>LANFEST COLORADO</b></span></div><div><span className="event-strip__number">∞</span><span>ROUNDS<br /><b>TO REMEMBER</b></span></div></section>
 
-        <section id="team" className="section section--team" aria-labelledby="team-title"><div className="section-intro section-intro--team" data-reveal><SectionLabel>THE LINEUP</SectionLabel><h2 id="team-title">MEET THE<br /><em>SQUAD.</em></h2><p>Seven players. One roster. Built for Colorado.</p><div className="section-intro__links"><a className="text-link" href="./stats.html">EXPLORE ALL STATS <ArrowIcon /></a><a className="text-link" href="#recorded-maps">OFFICIAL MAP TABLES <ArrowIcon /></a><a className="text-link" href="#rematch-stats">FRIENDLY REMATCH TABLES <ArrowIcon /></a></div></div><div className="roster-grid">{liveRoster.map(([name, role, status, channel], index) => {
+        <section id="team" className="section section--team" aria-labelledby="team-title"><div className="section-intro section-intro--team" data-reveal><SectionLabel>THE LINEUP</SectionLabel><h2 id="team-title">MEET THE<br /><em>SQUAD.</em></h2><p>Seven players. One roster. Built for Colorado.</p><div className="section-intro__links"><a className="text-link" href="./stats.html">EXPLORE ALL STATS <ArrowIcon /></a><a className="text-link" href="#recorded-maps">OFFICIAL MAP TABLES <ArrowIcon /></a><a className="text-link" href="#rematch-stats">FRIENDLY REMATCH TABLES <ArrowIcon /></a><a className="text-link" href="#overwatch-stats">OVERWATCH 2 STATS <ArrowIcon /></a></div></div><div className="roster-grid">{liveRoster.map(([name, role, status, channel], index) => {
           const recordedTotals = getRecordedPlayerTotals(name);
           const rematchTotals = getRematchTotals(getRematchPlayer(name));
-          return <article className="roster-card roster-card--interactive" key={name} data-reveal style={{ '--reveal-delay': `${index * 70}ms` }} role="button" tabIndex="0" aria-label={`Open ${name} player profile${name === 'BitchStewie' ? ', also known as Zixxy' : ''}`} onClick={(clickEvent) => { if (!clickEvent.target.closest('a')) setActivePlayer({ name, role, channel }); }} onKeyDown={(keyEvent) => { if (keyEvent.key === 'Enter' || keyEvent.key === ' ') { keyEvent.preventDefault(); setActivePlayer({ name, role, channel }); } }}><img className="roster-card__portrait" src={playerMedia[name]?.portrait} alt="" aria-hidden="true" /><div className="roster-card__top"><span>{status}</span></div>{(recordedTotals || rematchTotals) && <div className="roster-card__stats"><small>K / D / A · TWO MAPS EACH</small>{recordedTotals && <div><span>OFFICIAL</span><strong>{recordedTotals.kills} / {recordedTotals.deaths} / {recordedTotals.assists}</strong></div>}{rematchTotals && <div><span>FRIENDLY</span><strong>{rematchTotals.kills} / {rematchTotals.deaths} / {rematchTotals.assists}</strong></div>}</div>}{name === 'BitchStewie' && <span className="roster-card__alias">AKA ZIXXY</span>}<div className="roster-card__body"><h3>{name}</h3><p>{role}</p></div>{channel ? <a className="roster-card__link" href={`#broadcast-${channel}`} onClick={() => emitPulse(120)}>WATCH POV <ArrowIcon /></a> : <span className="roster-card__lock">CLICK FOR FILE</span>}</article>;
+          const overwatchTotals = getOverwatchPlayerTotals(name);
+          return <article className="roster-card roster-card--interactive" key={name} data-reveal style={{ '--reveal-delay': `${index * 70}ms` }} role="button" tabIndex="0" aria-label={`Open ${name} player profile${name === 'ghosted' ? ', also known as Zixxy' : ''}`} onClick={(clickEvent) => { if (!clickEvent.target.closest('a')) setActivePlayer({ name, role, channel }); }} onKeyDown={(keyEvent) => { if (keyEvent.key === 'Enter' || keyEvent.key === ' ') { keyEvent.preventDefault(); setActivePlayer({ name, role, channel }); } }}><img className="roster-card__portrait" src={playerMedia[name]?.portrait} alt="" aria-hidden="true" /><div className="roster-card__top"><span>{status}</span></div>{(recordedTotals || rematchTotals || overwatchTotals) && <div className="roster-card__stats">{(recordedTotals || rematchTotals) && <small>CS2 K / D / A · TWO MAPS EACH</small>}{recordedTotals && <div><span>OFFICIAL</span><strong>{recordedTotals.kills} / {recordedTotals.deaths} / {recordedTotals.assists}</strong></div>}{rematchTotals && <div><span>FRIENDLY</span><strong>{rematchTotals.kills} / {rematchTotals.deaths} / {rematchTotals.assists}</strong></div>}{overwatchTotals && <div className="roster-card__ow"><span>OVERWATCH 2</span><strong>{overwatchTotals.eliminations} E / {overwatchTotals.assists} A</strong></div>}</div>}{name === 'ghosted' && <span className="roster-card__alias">AKA ZIXXY</span>}<div className="roster-card__body"><h3>{name}</h3><p>{role}</p></div>{channel ? <a className="roster-card__link" href={`#broadcast-${channel}`} onClick={() => emitPulse(120)}>WATCH POV <ArrowIcon /></a> : <span className="roster-card__lock">CLICK FOR FILE</span>}</article>;
         })}</div></section>
 
         <CampaignBanner image="./assets/banners/loadout-ak.png" label="LOADOUT // ROUND READY" title="BUILT TO HOLD THE SITE." caption="8iT CUSTOM KIT // COLORADO DEPLOYMENT" align="right" position="center 46%" />
@@ -326,6 +306,8 @@ export function App() {
         <RematchStats />
 
         <RecordedMatchStats />
+
+        <OverwatchStats onOpenRosterPlayer={(rosterName) => { const row = liveRoster.find(([name]) => name === rosterName); if (row) setActivePlayer({ name: row[0], role: row[1], channel: row[3] }); }} />
 
         <TournamentPlacements />
 
