@@ -5,9 +5,10 @@ import react from "@vitejs/plugin-react";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const isGithubPages = process.env.GITHUB_ACTIONS === "true";
+const siteBase = process.env.VITE_BASE_PATH ?? (isGithubPages ? "/8iT/" : "/");
 
 export default defineConfig({
-  base: isGithubPages ? "/8iT/" : "/",
+  base: siteBase,
   build: {
     outDir: "dist/client",
     rollupOptions: {
