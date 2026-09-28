@@ -129,7 +129,7 @@ export function Shop() {
 
   return (
     <div className="shop-page">
-      <header className="shop-header"><ShopMark /><nav aria-label="Shop navigation"><a href="./">HOME</a><a href="#drop">DROP 01</a><a href="#story">THE STORY</a></nav><button className="shop-cart-button" type="button" onClick={() => setCartOpen(true)}><i className="fa-solid fa-bag-shopping" aria-hidden="true" /> BAG <span>{String(cartCount).padStart(2, '0')}</span></button></header>
+      <header className="shop-header"><ShopMark /><nav aria-label="Shop navigation"><a href="./">HOME</a><a href="./stats.html">STATS</a><a href="#drop">DROP 01</a><a href="#story">THE STORY</a></nav><button className="shop-cart-button" type="button" onClick={() => setCartOpen(true)}><i className="fa-solid fa-bag-shopping" aria-hidden="true" /> BAG <span>{String(cartCount).padStart(2, '0')}</span></button></header>
 
       <main>
         <section className="shop-hero" data-reveal="shop-hero"><div className="shop-hero__copy"><p className="shop-kicker">8iT // FIELD EQUIPMENT</p><h1>WEAR THE<br /><em>PRESSURE.</em></h1><p>Official 8iT gear for the room, the road, and the rounds nobody forgets. Drop 01 is built for EverLAN Colorado.</p><DropCountdown /><a className="shop-hero__cta" href="#drop">ENTER DROP 01 <ArrowIcon /></a></div><div className="shop-hero__art"><div className="shop-hero__stamp">NO<br />SAFE<br /><em>ROUNDS.</em></div><div className="shop-hero__product-card"><span>8iT / 001</span><strong>FIELD<br />UNIFORM</strong><small>COLORADO // 2026</small></div></div></section>

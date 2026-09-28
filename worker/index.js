@@ -9,7 +9,7 @@ export default {
 
     const indexUrl = new URL(request.url);
     const route = indexUrl.pathname.replace(/\/+$/, "") || "/";
-    indexUrl.pathname = route === "/shop" ? "/shop.html" : route === "/admin" ? "/admin.html" : "/index.html";
+    indexUrl.pathname = route === "/shop" ? "/shop.html" : route === "/admin" ? "/admin.html" : route === "/stats" ? "/stats.html" : "/index.html";
     indexUrl.search = "";
     return env.ASSETS.fetch(new Request(indexUrl, request));
   },

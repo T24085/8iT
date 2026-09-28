@@ -83,6 +83,27 @@ test("routes the friendly admin path to the control room page", async () => {
   assert.deepEqual(calls, ["/admin/?source=direct", "/admin.html"]);
 });
 
+test("routes the friendly stats path to the separate statistics page", async () => {
+  const calls = [];
+  const response = await worker.fetch(
+    new Request("https://example.test/stats/?source=nav", { headers: { accept: "text/html" } }),
+    {
+      ASSETS: {
+        fetch: async (request) => {
+          const url = new URL(request.url);
+          calls.push(url.pathname + url.search);
+          return new Response(url.pathname === "/stats.html" ? "stats" : "missing", {
+            status: url.pathname === "/stats.html" ? 200 : 404,
+          });
+        },
+      },
+    },
+  );
+
+  assert.equal(response.status, 200);
+  assert.deepEqual(calls, ["/stats/?source=nav", "/stats.html"]);
+});
+
 test("does not turn missing API or write requests into the app shell", async () => {
   for (const request of [
     new Request("https://example.test/api/missing", { headers: { accept: "application/json" } }),
@@ -107,6 +128,7 @@ test("emits the files required by Sites packaging", async () => {
   await access(new URL("../dist/client/index.html", import.meta.url));
   await access(new URL("../dist/client/shop.html", import.meta.url));
   await access(new URL("../dist/client/admin.html", import.meta.url));
+  await access(new URL("../dist/client/stats.html", import.meta.url));
   await access(new URL("../dist/server/index.js", import.meta.url));
   await access(new URL("../dist/.openai/hosting.json", import.meta.url));
 });
