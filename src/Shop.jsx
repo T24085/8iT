@@ -6,13 +6,13 @@ const checkoutUrl = 'https://8it.printful.me/product/team-8it-logo-cap';
 const assetRoot = `${import.meta.env.BASE_URL}assets/shop/`;
 const logoUrl = `${import.meta.env.BASE_URL}assets/players-hq/8it-logo.png`;
 const squadMerch = [
-  { name: 'HellaTurtlz', image: 'hoodie-hellaturlz.png', url: 'https://8it.printful.me/product/8it-hellaturtlz-unisex-eco-raglan-hoodie' },
-  { name: 'Ghosted', image: 'hoodie-ghosted.png', url: 'https://8it.printful.me/product/8it-ghosted-unisex-eco-raglan-hoodie' },
-  { name: 'Zixxy', image: 'hoodie-zixxy.png', url: 'https://8it.printful.me/product/8it-zixxy-unisex-eco-raglan-hoodie' },
-  { name: 'Titan101', image: 'hoodie-titan101.png', url: 'https://8it.printful.me/product/8it-titan101-unisex-eco-raglan-hoodie' },
-  { name: 'Ghettobird', image: 'hoodie-ghettobird.png', url: 'https://8it.printful.me/product/8it-ghettobird-unisex-eco-raglan-hoodie' },
-  { name: 'HanoSandy', image: 'hoodie-hanosandy.png', url: 'https://8it.printful.me/product/unisex-eco-raglan-hoodie-6aba7af0199e7' },
-  { name: 'PandaMonium', image: 'hoodie-pandamonium.png', url: 'https://8it.printful.me/product/unisex-eco-raglan-hoodie' },
+  { name: 'HellaTurtlz', image: 'hoodie-hellaturlz.png', backImage: 'hoodie-hellaturlz-back.png', url: 'https://8it.printful.me/product/8it-hellaturtlz-unisex-eco-raglan-hoodie' },
+  { name: 'Ghosted', image: 'hoodie-ghosted.png', backImage: 'hoodie-ghosted-back.png', url: 'https://8it.printful.me/product/8it-ghosted-unisex-eco-raglan-hoodie' },
+  { name: 'Zixxy', image: 'hoodie-zixxy.png', backImage: 'hoodie-zixxy-back.png', url: 'https://8it.printful.me/product/8it-zixxy-unisex-eco-raglan-hoodie' },
+  { name: 'Titan101', image: 'hoodie-titan101.png', backImage: 'hoodie-titan101-back.png', url: 'https://8it.printful.me/product/8it-titan101-unisex-eco-raglan-hoodie' },
+  { name: 'Ghettobird', image: 'hoodie-ghettobird.png', backImage: 'hoodie-ghettobird-back.png', url: 'https://8it.printful.me/product/8it-ghettobird-unisex-eco-raglan-hoodie' },
+  { name: 'HanoSandy', image: 'hoodie-hanosandy.png', backImage: 'hoodie-hanosandy-back.png', url: 'https://8it.printful.me/product/unisex-eco-raglan-hoodie-6aba7af0199e7' },
+  { name: 'PandaMonium', image: 'hoodie-pandamonium.png', backImage: 'hoodie-pandamonium-back.png', url: 'https://8it.printful.me/product/unisex-eco-raglan-hoodie' },
 ];
 const views = [
   { label: 'Front', file: 'team-8it-logo-cap-front.jpg', alt: 'Front view of the black Team 8iT cap with a red embroidered logo' },
@@ -34,6 +34,7 @@ function BuyLink({ children, className = '' }) {
 
 export function Shop() {
   const [viewIndex, setViewIndex] = useState(0);
+  const [merchViews, setMerchViews] = useState({});
   const [menuOpen, setMenuOpen] = useState(false);
   const active = views[viewIndex];
 
@@ -78,10 +79,14 @@ export function Shop() {
           <div className="store-collection__grid">
             {squadMerch.map((item, index) => (
               <article className="store-merch-card" key={item.name}>
-                <a className="store-merch-card__image" href={item.url} target="_blank" rel="noopener noreferrer" aria-label={`View ${item.name} hoodie on the official 8iT store`}>
-                  <img src={`${assetRoot}catalog/${item.image}`} alt={`Black 8iT logo eco raglan hoodie, ${item.name} edition`} loading="lazy" />
+                <div className={`store-merch-card__image${item.name === 'PandaMonium' && merchViews[item.name] === 'back' ? ' store-merch-card__image--white-mockup' : ''}`}>
+                  <img className={item.name === 'PandaMonium' && merchViews[item.name] === 'back' ? 'is-white-mockup' : ''} src={`${assetRoot}catalog/${merchViews[item.name] === 'back' ? item.backImage : item.image}`} alt={`${merchViews[item.name] === 'back' ? 'Back' : 'Front'} of the black ${item.name} 8iT eco raglan hoodie`} loading="lazy" />
                   <span>0{index + 1} / SQUAD</span>
-                </a>
+                  <div className="store-merch-card__view-toggle" role="group" aria-label={`${item.name} hoodie preview`}>
+                    <button type="button" aria-pressed={merchViews[item.name] !== 'back'} onClick={() => setMerchViews((current) => ({ ...current, [item.name]: 'front' }))}>FRONT</button>
+                    <button type="button" aria-pressed={merchViews[item.name] === 'back'} onClick={() => setMerchViews((current) => ({ ...current, [item.name]: 'back' }))}>BACK</button>
+                  </div>
+                </div>
                 <div className="store-merch-card__details"><div><p>8iT / SQUAD HOODIE</p><h3>{item.name}</h3></div><strong>FROM $55.50</strong></div>
                 <a className="store-merch-card__link" href={item.url} target="_blank" rel="noopener noreferrer">CHOOSE SIZE + SHOP <i className="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" /></a>
               </article>
