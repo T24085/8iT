@@ -13,6 +13,7 @@ import {
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 const logoUrl = `${import.meta.env.BASE_URL}assets/3d/8it-logo-hero.glb`;
+const idleRadiansPerSecond = (Math.PI * 2) / 60;
 
 function disposeModel(model) {
   model.traverse((object) => {
@@ -175,11 +176,14 @@ export function HeroLogo3D() {
       // The official flat mark remains visible if the model cannot load.
     });
 
-    const start = performance.now();
+    let lastFrameTime = performance.now();
     const animate = (now) => {
       frame = requestAnimationFrame(animate);
+      const deltaSeconds = Math.min((now - lastFrameTime) / 1000, 0.05);
+      lastFrameTime = now;
       if (!model || !visible || document.hidden) return;
-      pivot.rotation.y = userControlled ? yaw : motion.matches ? -0.13 : -0.13 + Math.sin((now - start) / 2800) * 0.24;
+      if (!userControlled && !motion.matches) yaw += deltaSeconds * idleRadiansPerSecond;
+      pivot.rotation.y = yaw;
       pivot.rotation.x = userControlled ? pitch : 0;
       renderer.render(scene, camera);
     };
