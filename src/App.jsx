@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { ADMIN_STORAGE_KEY, defaultEvent as event, defaultKillFeed as killFeed, defaultLiveMatch, defaultRoster as roster, defaultSchedule as schedule, defaultSwiss, readAdminData, swissToPublicBracket } from './siteData';
 import { RematchBracket } from './RematchBracket';
 import { RematchStats } from './RematchStatsPanel';
@@ -10,6 +10,8 @@ import { getOverwatchPlayerMaps, getOverwatchPlayerTotals } from './overwatchSta
 import { TournamentPlacements } from './TournamentPlacements';
 import { OfficialBracketPanel } from './OfficialBracketPanel';
 import { SiteHeader } from './SiteHeader.jsx';
+
+const HeroLogo3D = lazy(() => import('./HeroLogo3D.jsx').then(({ HeroLogo3D }) => ({ default: HeroLogo3D })));
 
 const channels = [
   { platform: 'Twitch', handle: 'pandoracast', type: 'twitch', role: 'PandaMonium // IGL', description: 'Team POV, match comms, and the Pandamonium broadcast desk.', url: 'https://www.twitch.tv/pandoracast', icon: 'fa-twitch', tone: 'red' },
@@ -284,7 +286,7 @@ export function App() {
       <SiteHeader ticketsUrl={currentEvent.ticketsUrl} soundEnabled={soundEnabled} onToggleSound={toggleSound} />
 
       <main>
-        <section id="home" className="hero" aria-labelledby="hero-title" style={{ backgroundImage: 'url("./assets/banners/hero-a-site.png")' }}><div className="hero__veil" /><div className="hero__scanline" /><div className="hero__content" data-reveal="hero-copy"><SectionLabel light>EVERLAN // COLORADO</SectionLabel><h1 id="hero-title">NO SAFE<br /><em>ROUNDS.</em></h1><p className="hero__copy">8iT is taking the room at LANFest Colorado. Four days. One squad. Every angle live.</p><div className="hero__actions"><a className="button button--primary" href={currentEvent.ticketsUrl} target="_blank" rel="noreferrer">GET EVENT PASSES <ArrowIcon /></a><a className="button button--ghost" href="#broadcast">WATCH THE FEED <i className="fa-solid fa-play" aria-hidden="true" /></a></div></div><div className="hero__event-card" data-reveal="hero-card" style={{ '--reveal-delay': '180ms' }}><p className="hero__event-kicker">{currentEvent.series}</p><strong>{currentEvent.shortDates}</strong><span>{currentEvent.location}</span><div className="hero__countdown"><small>EVENT T-MINUS</small><Countdown target={currentEvent.startAt} compact /></div><a href="#tickets">ENTER THE ROOM <ArrowIcon /></a></div><div className="hero__side-note">01 <span /> 8iT / NEW DAWN</div></section>
+        <section id="home" className="hero" aria-labelledby="hero-title" style={{ backgroundImage: `url("${import.meta.env.BASE_URL}assets/banners/hero-a-site-clean.png")` }}><div className="hero__veil" /><Suspense fallback={<div className="hero__logo-3d" role="img" aria-label="8iT logo"><img className="hero__logo-fallback" src={`${import.meta.env.BASE_URL}assets/players-hq/8it-logo.png`} alt="" /></div>}><HeroLogo3D /></Suspense><div className="hero__scanline" /><div className="hero__content" data-reveal="hero-copy"><SectionLabel light>EVERLAN // COLORADO</SectionLabel><h1 id="hero-title">NO SAFE<br /><em>ROUNDS.</em></h1><p className="hero__copy">8iT is taking the room at LANFest Colorado. Four days. One squad. Every angle live.</p><div className="hero__actions"><a className="button button--primary" href={currentEvent.ticketsUrl} target="_blank" rel="noreferrer">GET EVENT PASSES <ArrowIcon /></a><a className="button button--ghost" href="#broadcast">WATCH THE FEED <i className="fa-solid fa-play" aria-hidden="true" /></a></div></div><div className="hero__event-card" data-reveal="hero-card" style={{ '--reveal-delay': '180ms' }}><p className="hero__event-kicker">{currentEvent.series}</p><strong>{currentEvent.shortDates}</strong><span>{currentEvent.location}</span><div className="hero__countdown"><small>EVENT T-MINUS</small><Countdown target={currentEvent.startAt} compact /></div><a href="#tickets">ENTER THE ROOM <ArrowIcon /></a></div><div className="hero__side-note">01 <span /> 8iT / NEW DAWN</div></section>
 
         <section className="event-strip" aria-label="Event facts" data-reveal="strip"><div><span className="event-strip__number">04</span><span>FULL DAYS<br /><b>OF GAMING</b></span></div><div><span className="event-strip__number">330</span><span>SEATS<br /><b>IN THE ROOM</b></span></div><div><span className="event-strip__number">20</span><span>YEARS<br /><b>LANFEST COLORADO</b></span></div><div><span className="event-strip__number">∞</span><span>ROUNDS<br /><b>TO REMEMBER</b></span></div></section>
 

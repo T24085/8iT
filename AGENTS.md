@@ -13,6 +13,10 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Keep the public site full bleed and edge to edge.
 - Keep the hero copy container transparent so the background artwork remains visible; use a light image veil and localized text shadow for legibility.
 - Use the supplied official 8iT logo asset for visible brand marks; do not recreate the logo with styled text.
+- Treat the Blender logo as a full 3D hero asset: finish and texture both faces and the perimeter so it can rotate in the hero. Keep the official mark recognizable and use `public/assets/3d/8it-logo-hero.glb` for web placement.
+- Center the rotating 3D logo in the hero where the old wall logo sat; use the matching logo-free wall background so the marks never double up.
+- Let visitors freely rotate the hero's 3D logo by dragging with a mouse or touch, with arrow-key control as well; stop its idle motion after interaction.
+- Scale the interactive hero logo up on wide screens so it stays prominent without covering the headline or event card.
 - Keep the hype-reel clips as equal square tiles in a gapless, edge-to-edge grid.
 - Use Battlefy's completed 2026 LANFest stages for the official brackets: CS2 and Battlefield 4 each have six teams, three BO1 rounds, and nine matches; Overwatch 2 has eight teams, three BO3 rounds, and twelve matches. Keep CS2 team names and match results editable in the same-browser admin control room; migrate old 16-team demo saves to the official defaults.
 - Label bracket scores as match-series/map wins, not CS2 in-game rounds or Battlefield 4 tickets. Do not invent map names or underlying round/ticket scores. Keep the later friendly CS2 rematch outside all official brackets.
