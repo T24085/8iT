@@ -252,7 +252,12 @@ export function readAdminData() {
       event: { ...emptyAdminData.event, ...(saved.event || {}) },
       liveMatch: { ...emptyAdminData.liveMatch, ...(saved.liveMatch || {}) },
       roster: Array.isArray(saved.roster)
-        ? saved.roster.map((player) => player[0]?.toLowerCase() === 'hellaturlz' ? ['Hellaturtlz', ...player.slice(1)] : player)
+        ? saved.roster.map((player) => {
+          const name = player[0]?.toLowerCase();
+          if (name === 'hellaturlz') return ['Hellaturtlz', ...player.slice(1)];
+          if (name === 'hanosandy') return ['Hanosandy', ...player.slice(1)];
+          return player;
+        })
         : emptyAdminData.roster,
       schedule: Array.isArray(saved.schedule) ? saved.schedule : emptyAdminData.schedule,
       swiss: hydrateSwiss(saved.swiss),

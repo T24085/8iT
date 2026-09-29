@@ -12,7 +12,7 @@ const squadMerch = [
   { name: 'Zixxy', image: 'hoodie-zixxy.png', backImage: 'hoodie-zixxy-back.png', url: 'https://8it.printful.me/product/8it-zixxy-unisex-eco-raglan-hoodie' },
   { name: 'Titan101', image: 'hoodie-titan101.png', backImage: 'hoodie-titan101-back.png', url: 'https://8it.printful.me/product/8it-titan101-unisex-eco-raglan-hoodie' },
   { name: 'Ghettobird', image: 'hoodie-ghettobird.png', backImage: 'hoodie-ghettobird-back.png', url: 'https://8it.printful.me/product/8it-ghettobird-unisex-eco-raglan-hoodie' },
-  { name: 'HanoSandy', image: 'hoodie-hanosandy.png', backImage: 'hoodie-hanosandy-back.png', url: 'https://8it.printful.me/product/unisex-eco-raglan-hoodie-6aba7af0199e7' },
+  { name: 'Hanosandy', image: 'hoodie-hanosandy.png', backImage: 'hoodie-hanosandy-back.png', url: 'https://8it.printful.me/product/unisex-eco-raglan-hoodie-6aba7af0199e7' },
   { name: 'PandaMonium', image: 'hoodie-pandamonium.png', backImage: 'hoodie-pandamonium-back.png', url: 'https://8it.printful.me/product/unisex-eco-raglan-hoodie' },
 ];
 const views = [
@@ -56,7 +56,7 @@ export function Shop() {
                     <button type="button" aria-pressed={merchViews[item.name] === 'back'} onClick={() => setMerchViews((current) => ({ ...current, [item.name]: 'back' }))}>BACK</button>
                   </div>
                 </div>
-                <div className="store-merch-card__details"><div><p>8iT / SQUAD HOODIE</p><h3>{item.name}</h3></div><strong>FROM $55.50</strong></div>
+                <div className="store-merch-card__details"><div><p>8iT / SQUAD HOODIE</p><h3><span className={item.name === 'Hanosandy' ? 'player-name' : undefined}>{item.name}</span></h3></div><strong>FROM $55.50</strong></div>
                 <a className="store-merch-card__link" href={item.url} target="_blank" rel="noopener noreferrer">CHOOSE SIZE + SHOP <i className="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" /></a>
               </article>
             ))}

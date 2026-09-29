@@ -24,7 +24,10 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Use `public/assets/about-team-background.png` as the full-bleed background for the Play Hard. Do Good. section, preserving readable copy and venue information over the team image.
 - Keep the Play Hard. Do Good. image visibly bright through the overlay; use localized contrast instead of a heavy section-wide blackout.
 - Keep lineup copy direct and descriptive; avoid overwrought combat metaphors such as "the room is the weapon."
+- Spell the player name "Hanosandy" with a lowercase s throughout website copy, profile headings, stats, replay labels, shop listings, and accessibility text. Preserve this casing in text even where surrounding labels use uppercase styling.
 - Keep roster portraits in equal 1:1 square tiles so the supplied square artwork remains fully visible at every breakpoint.
+- Keep the seven roster portraits alive with subtle Blender-rendered 2.5D depth, slow camera drift, and restrained red lighting in the existing square cards. Preserve the supplied likenesses and wordmarks; load motion only when a card is near view, and show the original still artwork for reduced-motion users or video failures.
+- Keep PandaMonium's 2.5D photo-video portrait in the public square card. Preserve the separate full-3D Blender model and web export for a future use; do not put it back in the roster card unless requested.
 - In player-profile modals, show the supplied portrait centered and uncropped, and embed the player's configured Twitch or YouTube stream directly instead of using an outbound watch button.
 - Treat each player wordmark as a full-bleed banner across the profile-content column, flush to the top and side edges rather than contained inside a padded logo slot.
 - Use the Community section as a curated event and tournament image gallery with category filters and an accessible lightbox; do not restore the public submission form unless explicitly requested.

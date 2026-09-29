@@ -2,3 +2,5 @@ node_modules/
 dist/
 *.tar.gz
 .DS_Store
+blender/.render-frames/
+blender/*.blend1

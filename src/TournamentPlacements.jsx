@@ -17,7 +17,7 @@ export function TournamentPlacements() {
       {placements.map((placement, index) => <article className="tournament-placement" key={placement.game} data-reveal style={{ '--reveal-delay': `${index * 110}ms` }}>
         <div className="tournament-placement__top"><span>0{index + 1} // TOURNAMENT RESULT</span><span>TEAM REPORTED</span></div>
         <div className="tournament-placement__body"><strong aria-label="Second place">02<span>ND</span></strong><div><p>SECOND PLACE // LANFEST COLORADO</p><h3>{placement.game}</h3></div></div>
-        <a href={`#clip-${placement.videoId}`} aria-label={`Watch HanoSandy's FragWatch ${placement.label} replay on this page`}>WATCH HANOSANDY'S FRAGWATCH REPLAY <i className="fa-solid fa-arrow-down" aria-hidden="true" /></a>
+        <a href={`#clip-${placement.videoId}`} aria-label={`Watch Hanosandy's FragWatch ${placement.label} replay on this page`}>WATCH Hanosandy’s FRAGWATCH REPLAY <i className="fa-solid fa-arrow-down" aria-hidden="true" /></a>
       </article>)}
     </div>
   </section>;

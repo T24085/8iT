@@ -35,13 +35,13 @@ export function OverwatchStats({ onOpenRosterPlayer, onStatsPage = false }) {
     <div className="overwatch-stats__subhead"><h3>Overwatch player files</h3><span>E / A / D = ELIMINATIONS / ASSISTS / DEATHS</span></div>
     <div className="overwatch-stats__players">
       {players.map(({ name, rosterName, maps, totals }) => <article className="overwatch-stats__player" key={name} id={`ow-player-${name.toLowerCase()}`}>
-        <div className="overwatch-stats__player-head"><div><span>OVERWATCH 2 // 2 FINAL MAPS</span><h4>{name}</h4>{rosterName && rosterName.toLowerCase() !== name.toLowerCase() && <small>SITE ROSTER: {rosterName}</small>}</div><div><strong>{totals.eliminations}</strong><span>ELIMINATIONS</span></div></div>
+        <div className="overwatch-stats__player-head"><div><span>OVERWATCH 2 // 2 FINAL MAPS</span><h4><span className={name === 'Hanosandy' ? 'player-name' : undefined}>{name}</span></h4>{rosterName && rosterName.toLowerCase() !== name.toLowerCase() && <small>SITE ROSTER: {rosterName}</small>}</div><div><strong>{totals.eliminations}</strong><span>ELIMINATIONS</span></div></div>
         <div className="overwatch-stats__table-wrap"><table>
           <caption className="sr-only">{name} final Overwatch statistics by map</caption>
           <thead><tr><th scope="col">MAP</th><th scope="col">E / A / D</th><th scope="col">DMG</th><th scope="col">HEAL</th><th scope="col">MIT</th></tr></thead>
           <tbody>{maps.map(({ map, stats }) => <tr key={map}><th scope="row">{map}</th><td>{overwatchLine(stats)}</td><td>{number(stats.damage)}</td><td>{number(stats.healing)}</td><td>{number(stats.mitigation)}</td></tr>)}</tbody>
         </table></div>
-        {rosterName && onOpenRosterPlayer && <button className="overwatch-stats__profile-link" type="button" onClick={() => onOpenRosterPlayer(rosterName)}>OPEN {rosterName.toUpperCase()} PROFILE ↗</button>}
+        {rosterName && onOpenRosterPlayer && <button className="overwatch-stats__profile-link" type="button" onClick={() => onOpenRosterPlayer(rosterName)}>OPEN {rosterName === 'Hanosandy' ? rosterName : rosterName.toUpperCase()} PROFILE ↗</button>}
       </article>)}
     </div>
     <p className="overwatch-stats__note">Hanosandy’s Suravasa death count is hidden by the stream overlay. The later Blizzard World gameplay cuts off before a final scoreboard. These map scores are in-game rounds or points, separate from Battlefy match-series results. <a href={onStatsPage ? 'https://www.youtube.com/watch?v=TkT2AEMJTxY' : '#clip-TkT2AEMJTxY'} target={onStatsPage ? '_blank' : undefined} rel={onStatsPage ? 'noreferrer' : undefined}>WATCH THE REPLAY ↗</a></p>
