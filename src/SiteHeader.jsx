@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { readAdminData } from './siteData.js';
+import { DISCORD_INVITE_URL } from './siteData.js';
 
 const navigation = [
   ['TEAM', 'team'],
@@ -8,8 +8,8 @@ const navigation = [
   ['HYPE REEL', 'hype'],
   ['BROADCAST', 'broadcast'],
   ['INTEL', 'intel'],
-  ['COMMUNITY', 'community'],
-  ['TICKETS', 'tickets'],
+  ['PHOTO ARCHIVE', 'community'],
+  ['PLAY WITH US', 'tickets'],
   ['SHOP', 'shop'],
 ];
 
@@ -19,11 +19,10 @@ function linkFor(page, destination) {
   return `${page === 'home' ? '' : './'}#${destination}`;
 }
 
-export function SiteHeader({ page = 'home', ticketsUrl, soundEnabled, onToggleSound }) {
+export function SiteHeader({ page = 'home', soundEnabled, onToggleSound }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(page !== 'home');
   const menuButton = useRef(null);
-  const resolvedTicketsUrl = ticketsUrl || readAdminData().event.ticketsUrl;
 
   useEffect(() => {
     const onScroll = () => setScrolled(page !== 'home' || window.scrollY > 32);
@@ -65,7 +64,7 @@ export function SiteHeader({ page = 'home', ticketsUrl, soundEnabled, onToggleSo
     </nav>
     <div className="header-actions">
       {onToggleSound && <button className={`sound-toggle ${soundEnabled ? 'is-on' : ''}`} type="button" onClick={onToggleSound} aria-pressed={soundEnabled} aria-label={soundEnabled ? 'Mute site sound' : 'Enable site sound'}><i className={`fa-solid ${soundEnabled ? 'fa-volume-high' : 'fa-volume-xmark'}`} aria-hidden="true" /><span>{soundEnabled ? 'SOUND ON' : 'SOUND OFF'}</span></button>}
-      <a className="header-tickets" href={resolvedTicketsUrl} target="_blank" rel="noreferrer">GET TICKETS <i className="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" /></a>
+      <a className="header-tickets" href={DISCORD_INVITE_URL} target="_blank" rel="noreferrer">JOIN DISCORD <i className="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" /></a>
       <button ref={menuButton} className={`menu-toggle ${menuOpen ? 'is-open' : ''}`} type="button" aria-expanded={menuOpen} aria-controls="primary-navigation" aria-label={menuOpen ? 'Close menu' : 'Open menu'} onClick={() => setMenuOpen((open) => !open)}><span /><span /></button>
     </div>
     <div className="header-motto" aria-label="Play, improve, dominate">PLAY <span>/</span> IMPROVE <span>/</span> DOMINATE</div>

@@ -1,5 +1,7 @@
 import { officialTournamentBrackets } from './tournamentBrackets.js';
 
+export const DISCORD_INVITE_URL = 'https://discord.gg/PahXggXPY';
+
 export const ADMIN_STORAGE_KEY = '8it-admin-data-v1';
 
 export const defaultEvent = {
